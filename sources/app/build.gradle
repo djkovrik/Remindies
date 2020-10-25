@@ -23,6 +23,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError true
+        checkDependencies true
+        ignoreTestSources true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -30,6 +35,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
         useIR = true
+        freeCompilerArgs += [
+                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
+        ]
     }
     buildFeatures {
         compose true

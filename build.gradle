@@ -10,9 +10,26 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_android_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+    }
+}
+
+apply plugin: 'io.gitlab.arturbosch.detekt'
+
+detekt {
+    input = files("$projectDir/sources/")
+    config = files("$projectDir/detekt/base-config.yml")
+    baseline = file("$projectDir/detekt/baseline.xml")
+    parallel = true
+
+    reports {
+        html {
+            enabled = true
+            destination = file("$projectDir/detekt/reports/detekt.html")
+        }
     }
 }
 
