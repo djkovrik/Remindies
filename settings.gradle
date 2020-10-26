@@ -1,3 +1,6 @@
 rootProject.name = "Remindies"
 include ':app'
 project(':app').projectDir = new File(rootDir, 'sources/app')
+
+include ':core-domain'
+project(':core-domain').projectDir = new File(rootDir, 'sources/core-domain')
