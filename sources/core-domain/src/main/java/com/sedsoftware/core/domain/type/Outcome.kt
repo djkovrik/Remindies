@@ -1,4 +1,4 @@
-package com.sedsoftware.core.domain
+package com.sedsoftware.core.domain.type
 
 sealed class Outcome<out T : Any> {
 
