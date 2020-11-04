@@ -7,5 +7,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-datetime:$versions.dateTime"
 
+    // Testing
+    testImplementation "junit:junit:$versions.junit"
     testImplementation "com.winterbe:expekt:$versions.expekt"
 }
