@@ -1,6 +1,6 @@
-package com.sedsoftware.core.domain.type
+package com.sedsoftware.core.domain.constant
 
-object MonthNumber {
+object MonthNumbers {
     const val JANUARY = 1
     const val FEBRUARY = 2
     const val MARCH = 3

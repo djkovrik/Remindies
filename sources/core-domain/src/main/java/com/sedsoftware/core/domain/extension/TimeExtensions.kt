@@ -1,7 +1,8 @@
-package com.sedsoftware.core.domain.util
+package com.sedsoftware.core.domain.extension
 
-import com.sedsoftware.core.domain.type.MonthDays
-import com.sedsoftware.core.domain.type.MonthNumber
+import com.sedsoftware.core.domain.constant.LeapDividers
+import com.sedsoftware.core.domain.constant.MonthDays
+import com.sedsoftware.core.domain.constant.MonthNumbers
 import com.sedsoftware.core.domain.type.RemindiePeriod
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDateTime
@@ -46,26 +47,26 @@ fun LocalDateTime.plusPeriod(period: RemindiePeriod): LocalDateTime = when (peri
 
 fun Int.days(leap: Boolean): Int =
     when (this) {
-        MonthNumber.JANUARY -> MonthDays.JANUARY
-        MonthNumber.FEBRUARY -> if (leap) MonthDays.FEBRUARY_LEAP else MonthDays.FEBRUARY
-        MonthNumber.MARCH -> MonthDays.MARCH
-        MonthNumber.APRIL -> MonthDays.APRIL
-        MonthNumber.MAY -> MonthDays.MAY
-        MonthNumber.JUNE -> MonthDays.JUNE
-        MonthNumber.JULY -> MonthDays.JULY
-        MonthNumber.AUGUST -> MonthDays.AUGUST
-        MonthNumber.SEPTEMBER -> MonthDays.SEPTEMBER
-        MonthNumber.OCTOBER -> MonthDays.OCTOBER
-        MonthNumber.NOVEMBER -> MonthDays.NOVEMBER
-        MonthNumber.DECEMBER -> MonthDays.DECEMBER
+        MonthNumbers.JANUARY -> MonthDays.JANUARY
+        MonthNumbers.FEBRUARY -> if (leap) MonthDays.FEBRUARY_LEAP else MonthDays.FEBRUARY
+        MonthNumbers.MARCH -> MonthDays.MARCH
+        MonthNumbers.APRIL -> MonthDays.APRIL
+        MonthNumbers.MAY -> MonthDays.MAY
+        MonthNumbers.JUNE -> MonthDays.JUNE
+        MonthNumbers.JULY -> MonthDays.JULY
+        MonthNumbers.AUGUST -> MonthDays.AUGUST
+        MonthNumbers.SEPTEMBER -> MonthDays.SEPTEMBER
+        MonthNumbers.OCTOBER -> MonthDays.OCTOBER
+        MonthNumbers.NOVEMBER -> MonthDays.NOVEMBER
+        MonthNumbers.DECEMBER -> MonthDays.DECEMBER
         else -> error("Wrong month value")
     }
 
 fun Int.isLeap(): Boolean =
     when {
-        this % TimeConstants.LEAP_DIVIDER == 0 -> {
+        this % LeapDividers.LEAP_DIVIDER == 0 -> {
             when {
-                this % TimeConstants.LEAP_YEAR_MOD1 == 0 -> this % TimeConstants.LEAP_YEAR_MOD2 == 0
+                this % LeapDividers.LEAP_YEAR_MOD1 == 0 -> this % LeapDividers.LEAP_YEAR_MOD2 == 0
                 else -> true
             }
         }

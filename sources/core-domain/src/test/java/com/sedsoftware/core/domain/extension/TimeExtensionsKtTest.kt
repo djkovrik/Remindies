@@ -1,4 +1,4 @@
-package com.sedsoftware.core.domain.util
+package com.sedsoftware.core.domain.extension
 
 import com.sedsoftware.core.domain.type.RemindiePeriod
 import com.winterbe.expekt.should

@@ -1,6 +1,6 @@
-package com.sedsoftware.core.domain.util
+package com.sedsoftware.core.domain.constant
 
-object TimeConstants {
+object LeapDividers {
     const val LEAP_DIVIDER = 4
     const val LEAP_YEAR_MOD1 = 100
     const val LEAP_YEAR_MOD2 = 400

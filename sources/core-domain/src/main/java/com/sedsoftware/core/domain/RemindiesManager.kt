@@ -3,12 +3,12 @@ package com.sedsoftware.core.domain
 import com.sedsoftware.core.domain.entity.Remindie
 import com.sedsoftware.core.domain.exception.RemindieDeletionException
 import com.sedsoftware.core.domain.exception.RemindieInsertionException
+import com.sedsoftware.core.domain.extension.timeZone
 import com.sedsoftware.core.domain.helper.AlarmController
 import com.sedsoftware.core.domain.helper.RemindieTypeChecker
 import com.sedsoftware.core.domain.repository.RemindiesRepository
 import com.sedsoftware.core.domain.type.Outcome
 import com.sedsoftware.core.domain.type.RemindiePeriod
-import com.sedsoftware.core.domain.util.timeZone
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
