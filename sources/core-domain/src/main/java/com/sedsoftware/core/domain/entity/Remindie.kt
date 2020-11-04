@@ -5,10 +5,10 @@ import com.sedsoftware.core.domain.type.RemindieType
 import kotlinx.datetime.LocalDateTime
 
 data class Remindie(
-    val created: Long,
+    val id: Long,
+    val created: LocalDateTime,
+    val shot: LocalDateTime,
     val title: String,
-    val shoot: LocalDateTime,
     val type: RemindieType,
-    val periodical: Boolean = false,
-    val period: RemindiePeriod = RemindiePeriod.None
+    val period: RemindiePeriod
 )
