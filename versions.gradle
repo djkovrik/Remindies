@@ -25,6 +25,7 @@ ext.versions = [
 
         // Testing
         junit             : "4.13.1",
+        expekt            : "0.5.0",
 
         // Development tools
         timber            : "4.7.1",

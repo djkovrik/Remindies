@@ -1,4 +1,4 @@
-package com.sedsoftware.core.domain.util
+package com.sedsoftware.core.domain.helper
 
 import com.sedsoftware.core.domain.type.RemindieType
 

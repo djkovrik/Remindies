@@ -4,13 +4,14 @@ import com.sedsoftware.core.domain.entity.Remindie
 import com.sedsoftware.core.domain.repository.RemindiesRepository
 import com.sedsoftware.core.domain.type.Outcome
 import com.sedsoftware.core.domain.type.RemindiePeriod
-import com.sedsoftware.core.domain.util.AlarmController
-import com.sedsoftware.core.domain.util.RemindieTypeChecker
+import com.sedsoftware.core.domain.helper.AlarmController
+import com.sedsoftware.core.domain.helper.RemindieTypeChecker
+import com.sedsoftware.core.domain.util.RemindieInsertionException
+import com.sedsoftware.core.domain.util.timeZone
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
@@ -18,9 +19,6 @@ interface RemindiesManager {
     val controller: AlarmController
     val repository: RemindiesRepository
     val typeChecker: RemindieTypeChecker
-
-    private val timeZone: TimeZone
-        get() = TimeZone.currentSystemDefault()
 
     suspend fun add(title: String, date: LocalDateTime, period: RemindiePeriod): Outcome<Unit> =
         withContext(Dispatchers.IO) {
