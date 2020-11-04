@@ -1,6 +1,6 @@
 package com.sedsoftware.core.domain.type
 
-enum class ReminderType {
+enum class RemindieType {
 
     // Appointments
     BARBER,
