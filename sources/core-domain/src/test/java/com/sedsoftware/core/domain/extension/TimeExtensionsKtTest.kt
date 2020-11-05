@@ -17,6 +17,9 @@ class TimeExtensionsKtTest {
         // 31.12.2020 23:59
         val secondDate = LocalDateTime(year = 2020, monthNumber = 12, dayOfMonth = 31, hour = 23, minute = 59)
 
+        // 14.01.2021 01:02
+        val someWhereInTheMiddle = LocalDateTime(year = 2021, monthNumber = 1, dayOfMonth = 14, hour = 1, minute = 2)
+
         val timeZone: TimeZone = TimeZone.currentSystemDefault()
 
         val today1 = LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 5, hour = 22, minute = 59)
@@ -77,6 +80,14 @@ class TimeExtensionsKtTest {
             hour.should.be.equal(23)
             minute.should.be.equal(59)
         }
+
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Daily(3), timeZone).run {
+            year.should.be.equal(2021)
+            monthNumber.should.be.equal(1)
+            dayOfMonth.should.be.equal(17)
+            hour.should.be.equal(1)
+            minute.should.be.equal(2)
+        }
     }
 
     @Test
@@ -86,6 +97,9 @@ class TimeExtensionsKtTest {
                 dayOfWeek.should.be.equal(firstDate.dayOfWeek)
             }
             secondDate.plusPeriod(RemindiePeriod.Weekly(i), timeZone).run {
+                dayOfWeek.should.be.equal(secondDate.dayOfWeek)
+            }
+            someWhereInTheMiddle.plusPeriod(RemindiePeriod.Weekly(i), timeZone).run {
                 dayOfWeek.should.be.equal(secondDate.dayOfWeek)
             }
         }
@@ -105,6 +119,19 @@ class TimeExtensionsKtTest {
         secondDate.plusPeriod(RemindiePeriod.Monthly(10), timeZone).run { dayOfMonth.should.be.equal(31) }
         secondDate.plusPeriod(RemindiePeriod.Monthly(11), timeZone).run { dayOfMonth.should.be.equal(30) }
         secondDate.plusPeriod(RemindiePeriod.Monthly(12), timeZone).run { dayOfMonth.should.be.equal(31) }
+
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(1), timeZone).run { dayOfMonth.should.be.equal(14) }
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(2), timeZone).run { dayOfMonth.should.be.equal(14) }
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(3), timeZone).run { dayOfMonth.should.be.equal(14) }
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(4), timeZone).run { dayOfMonth.should.be.equal(14) }
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(5), timeZone).run { dayOfMonth.should.be.equal(14) }
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(6), timeZone).run { dayOfMonth.should.be.equal(14) }
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(7), timeZone).run { dayOfMonth.should.be.equal(14) }
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(8), timeZone).run { dayOfMonth.should.be.equal(14) }
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(9), timeZone).run { dayOfMonth.should.be.equal(14) }
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(10), timeZone).run { dayOfMonth.should.be.equal(14) }
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(11), timeZone).run { dayOfMonth.should.be.equal(14) }
+        someWhereInTheMiddle.plusPeriod(RemindiePeriod.Monthly(12), timeZone).run { dayOfMonth.should.be.equal(14) }
     }
 
     @Test
