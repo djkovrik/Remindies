@@ -1,8 +1,8 @@
-package com.sedsoftware.core.domain.helper
+package com.sedsoftware.core.domain.util
 
 import com.sedsoftware.core.domain.entity.Remindie
 
-interface AlarmController {
+interface AlarmManager {
     suspend fun setAlarm(remindie: Remindie)
     suspend fun cancelAlarm(remindie: Remindie)
 }

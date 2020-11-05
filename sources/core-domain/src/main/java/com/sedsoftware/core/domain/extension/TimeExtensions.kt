@@ -14,12 +14,8 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.days
 import kotlin.time.hours
 
-
-val Any.timeZone: TimeZone
-    get() = TimeZone.currentSystemDefault()
-
 @ExperimentalTime
-fun LocalDateTime.plusPeriod(period: RemindiePeriod): LocalDateTime = when (period) {
+fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalDateTime = when (period) {
     is RemindiePeriod.Hourly -> {
         toInstant(timeZone).plus(period.each.hours).toLocalDateTime(timeZone)
     }
