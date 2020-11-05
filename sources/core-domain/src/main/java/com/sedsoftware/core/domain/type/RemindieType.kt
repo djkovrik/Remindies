@@ -17,6 +17,7 @@ enum class RemindieType {
     BUY,
     CALL,
     MEET,
+    PAY,
     SELL,
     TALK,
     WRITE,
