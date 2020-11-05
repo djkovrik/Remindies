@@ -41,6 +41,10 @@ fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalD
     is RemindiePeriod.None -> this
 }
 
+@ExperimentalTime
+fun LocalDateTime.sameDayAs(other: LocalDateTime): Boolean =
+    year == other.year && dayOfYear == other.dayOfYear
+
 fun Int.days(leap: Boolean): Int =
     when (this) {
         MonthNumbers.JANUARY -> MonthDays.JANUARY

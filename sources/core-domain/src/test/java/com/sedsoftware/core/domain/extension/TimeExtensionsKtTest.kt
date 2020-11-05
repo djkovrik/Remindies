@@ -18,6 +18,11 @@ class TimeExtensionsKtTest {
         val secondDate = LocalDateTime(year = 2020, monthNumber = 12, dayOfMonth = 31, hour = 23, minute = 59)
 
         val timeZone: TimeZone = TimeZone.currentSystemDefault()
+
+        val today1 = LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 5, hour = 22, minute = 59)
+        val today2 = LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 5, hour = 23, minute = 59)
+        val tomorrow1 = LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 6, hour = 0, minute = 1)
+        val tomorrow2 = LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 6, hour = 23, minute = 59)
     }
 
     @Test
@@ -108,5 +113,21 @@ class TimeExtensionsKtTest {
             firstDate.plusPeriod(RemindiePeriod.Yearly(i), timeZone).run { year.should.be.equal(firstDate.year + i) }
             secondDate.plusPeriod(RemindiePeriod.Yearly(i), timeZone).run { year.should.be.equal(secondDate.year + i) }
         }
+    }
+
+    @Test
+    fun `test sameDayAs checker`() {
+        today1.sameDayAs(today2).should.be.equal(true)
+        today1.sameDayAs(tomorrow1).should.be.equal(false)
+        today1.sameDayAs(tomorrow2).should.be.equal(false)
+        today2.sameDayAs(today1).should.be.equal(true)
+        today2.sameDayAs(tomorrow1).should.be.equal(false)
+        today2.sameDayAs(tomorrow2).should.be.equal(false)
+        tomorrow1.sameDayAs(tomorrow2).should.be.equal(true)
+        tomorrow1.sameDayAs(today1).should.be.equal(false)
+        tomorrow1.sameDayAs(today2).should.be.equal(false)
+        tomorrow2.sameDayAs(tomorrow1).should.be.equal(true)
+        tomorrow2.sameDayAs(today1).should.be.equal(false)
+        tomorrow2.sameDayAs(today2).should.be.equal(false)
     }
 }
