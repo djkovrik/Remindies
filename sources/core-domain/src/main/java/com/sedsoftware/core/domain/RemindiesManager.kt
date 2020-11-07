@@ -8,30 +8,31 @@ import com.sedsoftware.core.domain.type.Outcome
 import com.sedsoftware.core.domain.type.RemindiePeriod
 import com.sedsoftware.core.domain.util.AlarmManager
 import com.sedsoftware.core.domain.util.RemindieTypeChecker
-import com.sedsoftware.core.domain.util.TimeDataProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
 interface RemindiesManager {
     val manager: AlarmManager
-    val provider: TimeDataProvider
     val repository: RemindiesRepository
     val typeChecker: RemindieTypeChecker
 
     suspend fun add(title: String, date: LocalDateTime, period: RemindiePeriod): Outcome<Unit> =
         withContext(Dispatchers.IO) {
             try {
-                val now = Clock.System.now().toLocalDateTime(provider.timeZone)
-                val nowLong = now.toInstant(provider.timeZone).toEpochMilliseconds()
+                val timeZone = TimeZone.currentSystemDefault()
+                val today = Clock.System.now().toLocalDateTime(timeZone)
+                val todayAsLong = today.toInstant(timeZone).toEpochMilliseconds()
 
                 val new = Remindie(
-                    id = nowLong,
-                    created = now,
+                    id = todayAsLong,
+                    created = today,
                     shot = date,
+                    timeZone = timeZone,
                     title = title,
                     type = typeChecker.getType(title),
                     period = period
