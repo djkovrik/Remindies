@@ -25,9 +25,6 @@ val Int.isLeap: Boolean
         else -> false
     }
 
-fun LocalDateTime.sameDayAs(other: LocalDateTime): Boolean =
-    year == other.year && dayOfYear == other.dayOfYear
-
 fun Int.days(leap: Boolean): Int =
     when (this) {
         MonthNumbers.JANUARY -> MonthDays.JANUARY
@@ -45,29 +42,34 @@ fun Int.days(leap: Boolean): Int =
         else -> error("Wrong month value")
     }
 
+fun LocalDateTime.sameDayAs(other: LocalDateTime): Boolean =
+    year == other.year && dayOfYear == other.dayOfYear
 
 @ExperimentalTime
-fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalDateTime = when (period) {
-    is RemindiePeriod.Hourly -> {
-        toInstant(timeZone).plus(period.each.hours).toLocalDateTime(timeZone)
-    }
-    is RemindiePeriod.Daily -> {
-        toInstant(timeZone).plus(period.each.days).toLocalDateTime(timeZone)
-    }
-    is RemindiePeriod.Weekly -> {
-        toInstant(timeZone).plus(period.each.days * DayOfWeek.values().size).toLocalDateTime(timeZone)
-    }
-    is RemindiePeriod.Monthly -> {
-        var nextMonthValue = (monthNumber + period.each) % Month.values().size
-        if (nextMonthValue == 0) nextMonthValue++
-        val daysInNextMonth = nextMonthValue.days(year.isLeap)
-        val dayOfNextMonth = if (dayOfMonth > daysInNextMonth) daysInNextMonth else dayOfMonth
+fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalDateTime =
+    when (period) {
+        is RemindiePeriod.Hourly -> {
+            toInstant(timeZone).plus(period.each.hours).toLocalDateTime(timeZone)
+        }
+        is RemindiePeriod.Daily -> {
+            toInstant(timeZone).plus(period.each.days).toLocalDateTime(timeZone)
+        }
+        is RemindiePeriod.Weekly -> {
+            toInstant(timeZone).plus(period.each.days * DayOfWeek.values().size).toLocalDateTime(timeZone)
+        }
+        is RemindiePeriod.Monthly -> {
+            var nextMonthNumber = (monthNumber + period.each) % Month.values().size
+            if (nextMonthNumber == 0) nextMonthNumber++
+            val daysInNextMonth = nextMonthNumber.days(year.isLeap)
+            val dayOfNextMonth = if (dayOfMonth > daysInNextMonth) daysInNextMonth else dayOfMonth
 
-        LocalDateTime(year, month, dayOfNextMonth, hour, minute, second, nanosecond)
+            val yearModifier = (monthNumber + period.each) / Month.values().size
+
+            LocalDateTime(year + yearModifier, nextMonthNumber, dayOfNextMonth, hour, minute, second, nanosecond)
+        }
+        is RemindiePeriod.Yearly -> {
+            val nextYear = year + period.each
+            LocalDateTime(nextYear, month, dayOfMonth, hour, minute, second, nanosecond)
+        }
+        is RemindiePeriod.None -> this
     }
-    is RemindiePeriod.Yearly -> {
-        val nextYear = year + period.each
-        LocalDateTime(nextYear, month, dayOfMonth, hour, minute, second, nanosecond)
-    }
-    is RemindiePeriod.None -> this
-}
