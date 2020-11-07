@@ -48,6 +48,7 @@ interface RemindiesManager {
     suspend fun remove(remindie: Remindie): Outcome<Unit> =
         withContext(Dispatchers.IO) {
             try {
+                manager.cancelAlarm(remindie)
                 repository.delete(remindie)
                 Outcome.Success(Unit)
             } catch (exception: Exception) {
@@ -55,8 +56,7 @@ interface RemindiesManager {
             }
         }
 
-//    suspend fun scheduleNext(): Outcome<Unit>
-//    suspend fun delete(remindie: Remindie): Outcome<Unit>
+//    suspend fun rescheduleNext(): Outcome<Unit>
 //    suspend fun getRemindiesForToday(): Outcome<List<Remindie>>
 //    suspend fun getRemindiesForDay(date: LocalDateTime): Outcome<List<Remindie>>
 //    suspend fun getRemindiesForCurrentWeek(): Outcome<List<Remindie>>
