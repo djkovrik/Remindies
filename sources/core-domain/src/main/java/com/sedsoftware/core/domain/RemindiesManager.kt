@@ -41,7 +41,7 @@ interface RemindiesManager {
 
                 Outcome.Success(Unit)
             } catch (exception: Exception) {
-                Outcome.Error(RemindieInsertionException("Failed to add new remindie", exception))
+                Outcome.Error(RemindieInsertionException("Failed to insert new remindie", exception))
             }
         }
 
