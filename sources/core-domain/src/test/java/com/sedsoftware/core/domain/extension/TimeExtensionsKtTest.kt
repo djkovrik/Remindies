@@ -111,7 +111,7 @@ class TimeExtensionsKtTest {
     @Test
     fun `test plusPeriod for month`() {
         secondDate.plusPeriod(RemindiePeriod.Monthly(1), currentTimeZone).run { dayOfMonth.should.be.equal(31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(2), currentTimeZone).run { dayOfMonth.should.be.equal(29) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(2), currentTimeZone).run { dayOfMonth.should.be.equal(28) }
         secondDate.plusPeriod(RemindiePeriod.Monthly(3), currentTimeZone).run { dayOfMonth.should.be.equal(31) }
         secondDate.plusPeriod(RemindiePeriod.Monthly(4), currentTimeZone).run { dayOfMonth.should.be.equal(30) }
         secondDate.plusPeriod(RemindiePeriod.Monthly(5), currentTimeZone).run { dayOfMonth.should.be.equal(31) }
