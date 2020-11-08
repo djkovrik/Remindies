@@ -4,10 +4,12 @@ import com.sedsoftware.core.domain.entity.Remindie
 import com.sedsoftware.core.domain.entity.Shot
 import com.sedsoftware.core.domain.type.RemindiePeriod
 import com.sedsoftware.core.domain.type.RemindieType
-import com.winterbe.expekt.should
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -33,8 +35,8 @@ class TimeExtensionsKtTest {
 
     @Test
     fun `leap year test`() {
-        2020.isLeap.should.be.equal(true)
-        2021.isLeap.should.be.equal(false)
+        assertTrue { 2020.isLeap }
+        assertFalse { 2021.isLeap }
     }
 
     @Test
@@ -42,54 +44,54 @@ class TimeExtensionsKtTest {
 
         // Asserts
         firstDate.plusPeriod(RemindiePeriod.Hourly(1), currentTimeZone).run {
-            year.should.be.equal(2020)
-            monthNumber.should.be.equal(1)
-            dayOfMonth.should.be.equal(31)
-            hour.should.be.equal(23)
-            minute.should.be.equal(59)
+            assertEquals(year, 2020)
+            assertEquals(monthNumber, 1)
+            assertEquals(dayOfMonth, 31)
+            assertEquals(hour, 23)
+            assertEquals(minute, 59)
         }
 
         firstDate.plusPeriod(RemindiePeriod.Hourly(2), currentTimeZone).run {
-            year.should.be.equal(2020)
-            monthNumber.should.be.equal(2)
-            dayOfMonth.should.be.equal(1)
-            hour.should.be.equal(0)
-            minute.should.be.equal(59)
+            assertEquals(year, 2020)
+            assertEquals(monthNumber, 2)
+            assertEquals(dayOfMonth, 1)
+            assertEquals(hour, 0)
+            assertEquals(minute, 59)
         }
 
         secondDate.plusPeriod(RemindiePeriod.Hourly(1), currentTimeZone).run {
-            year.should.be.equal(2021)
-            monthNumber.should.be.equal(1)
-            dayOfMonth.should.be.equal(1)
-            hour.should.be.equal(0)
-            minute.should.be.equal(59)
+            assertEquals(year, 2021)
+            assertEquals(monthNumber, 1)
+            assertEquals(dayOfMonth, 1)
+            assertEquals(hour, 0)
+            assertEquals(minute, 59)
         }
     }
 
     @Test
     fun `test plusPeriod for days`() {
         firstDate.plusPeriod(RemindiePeriod.Daily(3), currentTimeZone).run {
-            year.should.be.equal(2020)
-            monthNumber.should.be.equal(2)
-            dayOfMonth.should.be.equal(3)
-            hour.should.be.equal(22)
-            minute.should.be.equal(59)
+            assertEquals(year, 2020)
+            assertEquals(monthNumber, 2)
+            assertEquals(dayOfMonth, 3)
+            assertEquals(hour, 22)
+            assertEquals(minute, 59)
         }
 
         secondDate.plusPeriod(RemindiePeriod.Daily(3), currentTimeZone).run {
-            year.should.be.equal(2021)
-            monthNumber.should.be.equal(1)
-            dayOfMonth.should.be.equal(3)
-            hour.should.be.equal(23)
-            minute.should.be.equal(59)
+            assertEquals(year, 2021)
+            assertEquals(monthNumber, 1)
+            assertEquals(dayOfMonth, 3)
+            assertEquals(hour, 23)
+            assertEquals(minute, 59)
         }
 
         midday.plusPeriod(RemindiePeriod.Daily(3), currentTimeZone).run {
-            year.should.be.equal(2021)
-            monthNumber.should.be.equal(1)
-            dayOfMonth.should.be.equal(17)
-            hour.should.be.equal(1)
-            minute.should.be.equal(2)
+            assertEquals(year, 2021)
+            assertEquals(monthNumber, 1)
+            assertEquals(dayOfMonth, 17)
+            assertEquals(hour, 1)
+            assertEquals(minute, 2)
         }
     }
 
@@ -97,72 +99,75 @@ class TimeExtensionsKtTest {
     fun `test plusPeriod for weeks`() {
         for (i in 1..100) {
             firstDate.plusPeriod(RemindiePeriod.Weekly(i), currentTimeZone).run {
-                dayOfWeek.should.be.equal(firstDate.dayOfWeek)
+                assertEquals(dayOfWeek, firstDate.dayOfWeek)
             }
             secondDate.plusPeriod(RemindiePeriod.Weekly(i), currentTimeZone).run {
-                dayOfWeek.should.be.equal(secondDate.dayOfWeek)
+                assertEquals(dayOfWeek, secondDate.dayOfWeek)
             }
             midday.plusPeriod(RemindiePeriod.Weekly(i), currentTimeZone).run {
-                dayOfWeek.should.be.equal(secondDate.dayOfWeek)
+                assertEquals(dayOfWeek, midday.dayOfWeek)
             }
         }
     }
 
     @Test
     fun `test plusPeriod for month`() {
-        secondDate.plusPeriod(RemindiePeriod.Monthly(1), currentTimeZone).run { dayOfMonth.should.be.equal(31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(2), currentTimeZone).run { dayOfMonth.should.be.equal(28) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(3), currentTimeZone).run { dayOfMonth.should.be.equal(31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(4), currentTimeZone).run { dayOfMonth.should.be.equal(30) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(5), currentTimeZone).run { dayOfMonth.should.be.equal(31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(6), currentTimeZone).run { dayOfMonth.should.be.equal(30) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(7), currentTimeZone).run { dayOfMonth.should.be.equal(31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(8), currentTimeZone).run { dayOfMonth.should.be.equal(31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(9), currentTimeZone).run { dayOfMonth.should.be.equal(30) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(10), currentTimeZone).run { dayOfMonth.should.be.equal(31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(11), currentTimeZone).run { dayOfMonth.should.be.equal(30) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(12), currentTimeZone).run { dayOfMonth.should.be.equal(31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(1), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(2), currentTimeZone).run { assertEquals(dayOfMonth, 28) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(3), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(4), currentTimeZone).run { assertEquals(dayOfMonth, 30) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(5), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(6), currentTimeZone).run { assertEquals(dayOfMonth, 30) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(7), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(8), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(9), currentTimeZone).run { assertEquals(dayOfMonth, 30) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(10), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(11), currentTimeZone).run { assertEquals(dayOfMonth, 30) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(12), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
 
-        midday.plusPeriod(RemindiePeriod.Monthly(1), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(2), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(3), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(4), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(5), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(6), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(7), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(8), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(9), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(10), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(11), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(12), currentTimeZone).run { dayOfMonth.should.be.equal(14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(1), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(2), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(3), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(4), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(5), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(6), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(7), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(8), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(9), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(10), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(11), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(12), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
     }
 
     @Test
     fun `test plusPeriod for years`() {
         for (i in 1..100) {
             firstDate.plusPeriod(RemindiePeriod.Yearly(i), currentTimeZone).run {
-                year.should.be.equal(firstDate.year + i)
+                assertEquals(year, firstDate.year + i)
             }
             secondDate.plusPeriod(RemindiePeriod.Yearly(i), currentTimeZone).run {
-                year.should.be.equal(secondDate.year + i)
+                assertEquals(year, secondDate.year + i)
+            }
+            midday.plusPeriod(RemindiePeriod.Yearly(i), currentTimeZone).run {
+                assertEquals(year, midday.year + i)
             }
         }
     }
 
     @Test
     fun `test sameDayAs checker`() {
-        today1.sameDayAs(today2).should.be.equal(true)
-        today1.sameDayAs(tomorrow1).should.be.equal(false)
-        today1.sameDayAs(tomorrow2).should.be.equal(false)
-        today2.sameDayAs(today1).should.be.equal(true)
-        today2.sameDayAs(tomorrow1).should.be.equal(false)
-        today2.sameDayAs(tomorrow2).should.be.equal(false)
-        tomorrow1.sameDayAs(tomorrow2).should.be.equal(true)
-        tomorrow1.sameDayAs(today1).should.be.equal(false)
-        tomorrow1.sameDayAs(today2).should.be.equal(false)
-        tomorrow2.sameDayAs(tomorrow1).should.be.equal(true)
-        tomorrow2.sameDayAs(today1).should.be.equal(false)
-        tomorrow2.sameDayAs(today2).should.be.equal(false)
+        assertEquals(today1.sameDayAs(today2), true)
+        assertEquals(today1.sameDayAs(tomorrow1), false)
+        assertEquals(today1.sameDayAs(tomorrow2), false)
+        assertEquals(today2.sameDayAs(today1), true)
+        assertEquals(today2.sameDayAs(tomorrow1), false)
+        assertEquals(today2.sameDayAs(tomorrow2), false)
+        assertEquals(tomorrow1.sameDayAs(tomorrow2), true)
+        assertEquals(tomorrow1.sameDayAs(today1), false)
+        assertEquals(tomorrow1.sameDayAs(today2), false)
+        assertEquals(tomorrow2.sameDayAs(tomorrow1), true)
+        assertEquals(tomorrow2.sameDayAs(today1), false)
+        assertEquals(tomorrow2.sameDayAs(today2), false)
     }
 
     @Test
@@ -184,7 +189,8 @@ class TimeExtensionsKtTest {
             period = RemindiePeriod.None
         )
 
-        remindie1.toNearestShot(today1).should.be.equal(
+        assertEquals(
+            remindie1.toNearestShot(today1),
             Shot(
                 remindie = remindie1,
                 planned = shot1,
@@ -207,7 +213,8 @@ class TimeExtensionsKtTest {
             period = RemindiePeriod.None
         )
 
-        remindie2.toNearestShot(today2).should.be.equal(
+        assertEquals(
+            remindie2.toNearestShot(today2),
             Shot(
                 remindie = remindie2,
                 planned = shot2,
@@ -230,7 +237,8 @@ class TimeExtensionsKtTest {
             period = RemindiePeriod.Hourly(3)
         )
 
-        remindie3.toNearestShot(today3).should.be.equal(
+        assertEquals(
+            remindie3.toNearestShot(today3),
             Shot(
                 remindie = remindie3,
                 planned = LocalDateTime(2020, 11, 8, 0, 33),
@@ -252,7 +260,8 @@ class TimeExtensionsKtTest {
             period = RemindiePeriod.Daily(2)
         )
 
-        remindie4.toNearestShot(today4).should.be.equal(
+        assertEquals(
+            remindie4.toNearestShot(today4),
             Shot(
                 remindie = remindie4,
                 planned = LocalDateTime(2020, 11, 9, 18, 33),
@@ -274,7 +283,8 @@ class TimeExtensionsKtTest {
             period = RemindiePeriod.Weekly(2)
         )
 
-        remindie5.toNearestShot(today5).should.be.equal(
+        assertEquals(
+            remindie5.toNearestShot(today5),
             Shot(
                 remindie = remindie5,
                 planned = LocalDateTime(2020, 11, 21, 18, 33),
@@ -296,7 +306,8 @@ class TimeExtensionsKtTest {
             period = RemindiePeriod.Monthly(14)
         )
 
-        remindie6.toNearestShot(today6).should.be.equal(
+        assertEquals(
+            remindie6.toNearestShot(today6),
             Shot(
                 remindie = remindie6,
                 planned = LocalDateTime(2022, 1, 7, 18, 33),
