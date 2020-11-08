@@ -3,11 +3,13 @@ package com.sedsoftware.core.domain.extension
 import com.sedsoftware.core.domain.entity.Remindie
 import com.sedsoftware.core.domain.entity.Shot
 import com.sedsoftware.core.domain.type.RemindiePeriod
+import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.toLocalDateTime
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-fun Remindie.toNearestShot(today: LocalDateTime): Shot {
+fun Remindie.toNearestShot(today: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)): Shot {
 
     // Not fired yet
     if (shot > today) {

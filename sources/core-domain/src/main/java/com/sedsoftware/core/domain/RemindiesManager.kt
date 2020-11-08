@@ -53,8 +53,7 @@ interface RemindiesManager {
 
     suspend fun remove(remindie: Remindie): Single<Outcome<Unit>> =
         singleFromFunction {
-            val today = Clock.System.now().toLocalDateTime(remindie.timeZone)
-            val next = remindie.toNearestShot(today)
+            val next = remindie.toNearestShot()
             manager.cancelAlarm(next)
             repository.delete(remindie)
         }
@@ -65,10 +64,7 @@ interface RemindiesManager {
     suspend fun rescheduleNext(): Single<Outcome<Unit>> =
         singleFromFunction {
             val shots = repository.getAll()
-                .map { remindie ->
-                    val today = Clock.System.now().toLocalDateTime(remindie.timeZone)
-                    remindie.toNearestShot(today)
-                }
+                .map { it.toNearestShot() }
                 .filter { !it.isFired }
                 .sortedBy { it.planned }
 
