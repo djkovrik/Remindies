@@ -7,6 +7,7 @@ buildscript {
         google()
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx/" }
+        maven { url "https://dl.bintray.com/badoo/maven" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_android_version"
@@ -39,6 +40,7 @@ allprojects {
         google()
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx/" }
+        maven { url "https://dl.bintray.com/badoo/maven" }
     }
 }
 

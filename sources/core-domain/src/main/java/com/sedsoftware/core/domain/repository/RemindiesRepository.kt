@@ -3,7 +3,7 @@ package com.sedsoftware.core.domain.repository
 import com.sedsoftware.core.domain.entity.Remindie
 
 interface RemindiesRepository {
-    suspend fun insert(remindie: Remindie)
-    suspend fun delete(remindie: Remindie)
-    suspend fun getAll(): List<Remindie>
+    fun insert(remindie: Remindie)
+    fun delete(remindie: Remindie)
+    fun getAll(): List<Remindie>
 }
