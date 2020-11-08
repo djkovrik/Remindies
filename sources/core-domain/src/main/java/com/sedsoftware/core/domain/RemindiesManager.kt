@@ -3,6 +3,8 @@ package com.sedsoftware.core.domain
 import com.sedsoftware.core.domain.entity.Remindie
 import com.sedsoftware.core.domain.exception.RemindieDeletionException
 import com.sedsoftware.core.domain.exception.RemindieInsertionException
+import com.sedsoftware.core.domain.exception.RemindieSchedulingException
+import com.sedsoftware.core.domain.extension.toNearestShot
 import com.sedsoftware.core.domain.repository.RemindiesRepository
 import com.sedsoftware.core.domain.type.Outcome
 import com.sedsoftware.core.domain.type.RemindiePeriod
@@ -15,7 +17,9 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 interface RemindiesManager {
     val manager: AlarmManager
     val repository: RemindiesRepository
@@ -49,7 +53,9 @@ interface RemindiesManager {
     suspend fun remove(remindie: Remindie): Outcome<Unit> =
         withContext(Dispatchers.IO) {
             try {
-                manager.cancelAlarm(remindie)
+                val today = Clock.System.now().toLocalDateTime(remindie.timeZone)
+                val next = remindie.toNearestShot(today)
+                manager.cancelAlarm(next)
                 repository.delete(remindie)
                 Outcome.Success(Unit)
             } catch (exception: Exception) {
@@ -57,7 +63,27 @@ interface RemindiesManager {
             }
         }
 
-//    suspend fun rescheduleNext(): Outcome<Unit>
+    suspend fun rescheduleNext(): Outcome<Unit> =
+        withContext(Dispatchers.IO) {
+            try {
+                val shots = repository.getAll()
+                    .map { remindie ->
+                        val today = Clock.System.now().toLocalDateTime(remindie.timeZone)
+                        remindie.toNearestShot(today)
+                    }
+                    .filter { !it.isFired }
+                    .sortedBy { it.planned }
+
+                if (shots.isNotEmpty()) {
+                    val next = shots.first()
+                    manager.setAlarm(next)
+                }
+
+                Outcome.Success(Unit)
+            } catch (exception: Exception) {
+                Outcome.Error(RemindieSchedulingException("Failed to reschedule remindies", exception))
+            }
+        }
 //    suspend fun getRemindiesForToday(): Outcome<List<Remindie>>
 //    suspend fun getRemindiesForDay(date: LocalDateTime): Outcome<List<Remindie>>
 //    suspend fun getRemindiesForCurrentWeek(): Outcome<List<Remindie>>
