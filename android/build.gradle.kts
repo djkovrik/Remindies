@@ -36,6 +36,7 @@ dependencies {
 
     implementation(Deps.Android.JetPack.appCompat)
     implementation(Deps.Android.JetPack.ktx)
+
     implementation(Deps.Core.MVIKotlin.mvikotlin)
     implementation(Deps.Core.MVIKotlin.mvikotlinMain)
     implementation(Deps.Core.MVIKotlin.mvikotlinLogging)

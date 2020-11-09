@@ -14,6 +14,8 @@ kotlin {
                 implementation(Deps.Core.Reaktive.reaktive)
                 implementation(Deps.JetBrains.DateTime.dateTime)
             }
+
+            kotlin.srcDirs("src/commonMain/kotlinX")
         }
 
         named("commonTest") {

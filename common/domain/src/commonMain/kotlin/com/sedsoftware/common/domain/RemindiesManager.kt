@@ -7,10 +7,10 @@ import com.badoo.reaktive.single.onErrorReturn
 import com.badoo.reaktive.single.singleFromFunction
 import com.badoo.reaktive.single.subscribeOn
 import com.sedsoftware.common.domain.entity.Remindie
+import com.sedsoftware.common.domain.entity.toNearestShot
 import com.sedsoftware.common.domain.exception.RemindieDeletionException
 import com.sedsoftware.common.domain.exception.RemindieInsertionException
 import com.sedsoftware.common.domain.exception.RemindieSchedulingException
-import com.sedsoftware.common.domain.extension.toNearestShot
 import com.sedsoftware.common.domain.repository.RemindiesRepository
 import com.sedsoftware.common.domain.type.Outcome
 import com.sedsoftware.common.domain.type.RemindiePeriod
