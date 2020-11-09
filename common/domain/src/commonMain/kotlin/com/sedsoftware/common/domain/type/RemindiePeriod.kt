@@ -1,4 +1,4 @@
-package com.sedsoftware.core.domain.type
+package com.sedsoftware.common.domain.type
 
 sealed class RemindiePeriod(val each: Int) {
     object None : RemindiePeriod(0)

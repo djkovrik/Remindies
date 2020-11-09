@@ -1,6 +1,6 @@
-package com.sedsoftware.core.domain.repository
+package com.sedsoftware.common.domain.repository
 
-import com.sedsoftware.core.domain.entity.Remindie
+import com.sedsoftware.common.domain.entity.Remindie
 
 interface RemindiesRepository {
     fun insert(remindie: Remindie)

@@ -1,8 +1,8 @@
-package com.sedsoftware.core.domain.extension
+package com.sedsoftware.common.domain.extension
 
-import com.sedsoftware.core.domain.entity.Remindie
-import com.sedsoftware.core.domain.entity.Shot
-import com.sedsoftware.core.domain.type.RemindiePeriod
+import com.sedsoftware.common.domain.entity.Remindie
+import com.sedsoftware.common.domain.entity.Shot
+import com.sedsoftware.common.domain.type.RemindiePeriod
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toLocalDateTime

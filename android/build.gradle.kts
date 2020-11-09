@@ -2,8 +2,8 @@ import org.jetbrains.compose.compose
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.compose")
     kotlin("android")
+    id("org.jetbrains.compose")
 }
 
 android {
@@ -30,9 +30,12 @@ android {
 
 dependencies {
     implementation(project(":common:domain"))
+
     implementation(compose.ui)
     implementation(compose.material)
 
+    implementation(Deps.Android.JetPack.appCompat)
+    implementation(Deps.Android.JetPack.ktx)
     implementation(Deps.Core.MVIKotlin.mvikotlin)
     implementation(Deps.Core.MVIKotlin.mvikotlinMain)
     implementation(Deps.Core.MVIKotlin.mvikotlinLogging)

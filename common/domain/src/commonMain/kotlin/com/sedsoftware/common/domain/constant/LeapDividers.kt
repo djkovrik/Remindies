@@ -1,4 +1,4 @@
-package com.sedsoftware.core.domain.constant
+package com.sedsoftware.common.domain.constant
 
 object LeapDividers {
     const val LEAP_DIVIDER = 4

@@ -1,4 +1,4 @@
-package com.sedsoftware.core.domain.entity
+package com.sedsoftware.common.domain.entity
 
 import kotlinx.datetime.LocalDateTime
 

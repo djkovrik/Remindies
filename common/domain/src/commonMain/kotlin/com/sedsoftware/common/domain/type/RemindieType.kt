@@ -1,4 +1,4 @@
-package com.sedsoftware.core.domain.type
+package com.sedsoftware.common.domain.type
 
 enum class RemindieType {
 

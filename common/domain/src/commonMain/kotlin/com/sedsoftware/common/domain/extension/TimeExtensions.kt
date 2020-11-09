@@ -1,9 +1,9 @@
-package com.sedsoftware.core.domain.extension
+package com.sedsoftware.common.domain.extension
 
-import com.sedsoftware.core.domain.constant.LeapDividers
-import com.sedsoftware.core.domain.constant.MonthDays
-import com.sedsoftware.core.domain.constant.MonthNumbers
-import com.sedsoftware.core.domain.type.RemindiePeriod
+import com.sedsoftware.common.domain.constant.LeapDividers
+import com.sedsoftware.common.domain.constant.MonthDays
+import com.sedsoftware.common.domain.constant.MonthNumbers
+import com.sedsoftware.common.domain.type.RemindiePeriod
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month

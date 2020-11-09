@@ -1,4 +1,4 @@
-package com.sedsoftware.core.domain.constant
+package com.sedsoftware.common.domain.constant
 
 object MonthDays {
     const val JANUARY = 31

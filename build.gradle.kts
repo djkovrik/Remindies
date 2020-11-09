@@ -28,3 +28,9 @@ detekt {
         }
     }
 }
+
+tasks.register("runOnGitHub") {
+    dependsOn(":detekt", ":app:lint", ":app:testDebugUnitTest")
+    group = "custom"
+    description = "./gradlew runOnGitHub # runs on GitHub Action"
+}

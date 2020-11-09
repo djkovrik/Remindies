@@ -1,19 +1,18 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("com.android.library")
     id("kotlin-multiplatform")
 }
 
 kotlin {
-    jvm("desktop")
     android()
 
     sourceSets {
         named("commonMain") {
             dependencies {
-                implementation(Deps.JetBrains.DateTime.dateTime)
                 implementation(Deps.Core.Reaktive.reaktive)
-                implementation(Deps.Core.MVIKotlin.mvikotlin)
-                implementation(Deps.Core.MVIKotlin.mvikotlinExtensionsReaktive)
+                implementation(Deps.JetBrains.DateTime.dateTime)
             }
         }
 
@@ -29,11 +28,6 @@ kotlin {
                 implementation(Deps.JetBrains.Kotlin.testJunit)
             }
         }
-        named("desktopTest") {
-            dependencies {
-                implementation(Deps.JetBrains.Kotlin.testJunit)
-            }
-        }
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -45,7 +39,7 @@ android {
     compileSdkVersion(30)
 
     defaultConfig {
-        minSdkVersion(23)
+        minSdkVersion(21)
         targetSdkVersion(30)
     }
 
@@ -56,8 +50,9 @@ android {
 
     sourceSets {
         named("main") {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+            java.srcDirs("src/androidMain/kotlin")
             res.srcDirs("src/androidMain/res")
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
         }
     }
 }
