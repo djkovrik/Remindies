@@ -1,4 +1,4 @@
-package com.sedsoftware.core.domain
+package com.sedsoftware
 
 import com.sedsoftware.common.domain.entity.Remindie
 import com.sedsoftware.common.domain.type.RemindiePeriod
