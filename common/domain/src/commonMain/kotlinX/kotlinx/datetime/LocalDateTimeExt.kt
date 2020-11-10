@@ -7,6 +7,7 @@ import com.sedsoftware.common.primitive.days
 import com.sedsoftware.common.primitive.isLeap
 import kotlin.time.ExperimentalTime
 
+
 fun LocalDateTime.sameDayAs(other: LocalDateTime): Boolean =
     year == other.year && dayOfYear == other.dayOfYear
 
@@ -57,3 +58,6 @@ fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalD
         }
         is RemindiePeriod.None -> this
     }
+
+@ExperimentalTime
+fun LocalDateTime.moveToZone(from: TimeZone, to: TimeZone): LocalDateTime = toInstant(from).toLocalDateTime(to)

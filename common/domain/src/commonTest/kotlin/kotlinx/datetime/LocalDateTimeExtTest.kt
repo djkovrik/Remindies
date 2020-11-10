@@ -156,4 +156,16 @@ class LocalDateTimeExtTest {
         assertEquals(tomorrow2.sameDayAs(today1), false)
         assertEquals(tomorrow2.sameDayAs(today2), false)
     }
+
+    @Test
+    fun `moveToZone test`() {
+        val baseDate = LocalDateTime(2020, 11, 10, 1, 23)
+
+        for (i in 1..12) {
+            baseDate.moveToZone(TimeZone.of("GMT"), TimeZone.of("GMT+$i")).run {
+                assertEquals(hour, 1 + i)
+                assertEquals(minute, 23)
+            }
+        }
+    }
 }
