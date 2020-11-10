@@ -1,6 +1,5 @@
-package com.sedsoftware.primitive
+package com.sedsoftware.common.primitive
 
-import com.sedsoftware.common.primitive.isLeap
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

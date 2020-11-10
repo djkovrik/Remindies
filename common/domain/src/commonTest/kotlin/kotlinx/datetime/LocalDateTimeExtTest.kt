@@ -7,7 +7,7 @@ import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 
-class LocalDateTimeTest {
+class LocalDateTimeExtTest {
     companion object {
         // 31.01.2020 22:59
         val firstDate = LocalDateTime(year = 2020, monthNumber = 1, dayOfMonth = 31, hour = 22, minute = 59)
@@ -98,7 +98,7 @@ class LocalDateTimeTest {
     }
 
     @Test
-    fun `test plusPeriod for month`() {
+    fun `test plusPeriod for months`() {
         secondDate.plusPeriod(RemindiePeriod.Monthly(1), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
         secondDate.plusPeriod(RemindiePeriod.Monthly(2), currentTimeZone).run { assertEquals(dayOfMonth, 28) }
         secondDate.plusPeriod(RemindiePeriod.Monthly(3), currentTimeZone).run { assertEquals(dayOfMonth, 31) }

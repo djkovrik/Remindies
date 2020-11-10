@@ -6,8 +6,6 @@ import com.sedsoftware.common.domain.type.RemindiePeriod
 import com.sedsoftware.common.primitive.days
 import com.sedsoftware.common.primitive.isLeap
 import kotlin.time.ExperimentalTime
-import kotlin.time.days
-import kotlin.time.hours
 
 fun LocalDateTime.sameDayAs(other: LocalDateTime): Boolean =
     year == other.year && dayOfYear == other.dayOfYear
@@ -16,13 +14,13 @@ fun LocalDateTime.sameDayAs(other: LocalDateTime): Boolean =
 fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalDateTime =
     when (period) {
         is RemindiePeriod.Hourly -> {
-            toInstant(timeZone).plus(period.each.hours).toLocalDateTime(timeZone)
+            toInstant(timeZone).plus(period.each, DateTimeUnit.HOUR, timeZone).toLocalDateTime(timeZone)
         }
         is RemindiePeriod.Daily -> {
-            toInstant(timeZone).plus(period.each.days).toLocalDateTime(timeZone)
+            toInstant(timeZone).plus(period.each, DateTimeUnit.DAY, timeZone).toLocalDateTime(timeZone)
         }
         is RemindiePeriod.Weekly -> {
-            toInstant(timeZone).plus(period.each.days * DayOfWeek.values().size).toLocalDateTime(timeZone)
+            toInstant(timeZone).plus(period.each, DateTimeUnit.WEEK, timeZone).toLocalDateTime(timeZone)
         }
         is RemindiePeriod.Monthly -> {
             val yearModifier = (monthNumber + period.each) / Month.values().size
@@ -34,7 +32,7 @@ fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalD
             val daysInNextMonth = nextMonthNumber.days(nextYear.isLeap)
             val dayOfNextMonth = if (dayOfMonth > daysInNextMonth) daysInNextMonth else dayOfMonth
 
-            LocalDateTime(nextYear, nextMonthNumber, dayOfNextMonth, hour, minute, second, nanosecond)
+            LocalDateTime(nextYear, nextMonthNumber, dayOfNextMonth, hour, minute)
         }
         is RemindiePeriod.Yearly -> {
             val nextYear = year + period.each
@@ -43,18 +41,18 @@ fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalD
             when {
                 // current is leap - next is leap
                 year.isLeap && monthNumber == MonthNumbers.FEBRUARY && dayOfMonth == MonthDays.FEBRUARY_LEAP && nextYear.isLeap ->
-                    LocalDateTime(nextYear, month, MonthDays.FEBRUARY_LEAP, hour, minute, second, nanosecond)
+                    LocalDateTime(nextYear, month, MonthDays.FEBRUARY_LEAP, hour, minute)
                 // current is leap - next is non leap
                 year.isLeap && monthNumber == MonthNumbers.FEBRUARY && dayOfMonth == MonthDays.FEBRUARY_LEAP && !nextYear.isLeap ->
-                    LocalDateTime(nextYear, month, MonthDays.FEBRUARY, hour, minute, second, nanosecond)
+                    LocalDateTime(nextYear, month, MonthDays.FEBRUARY, hour, minute)
                 // current is non leap - next is leap
                 !year.isLeap && monthNumber == MonthNumbers.FEBRUARY && dayOfMonth == MonthDays.FEBRUARY && nextYear.isLeap ->
-                    LocalDateTime(nextYear, month, MonthDays.FEBRUARY_LEAP, hour, minute, second, nanosecond)
+                    LocalDateTime(nextYear, month, MonthDays.FEBRUARY_LEAP, hour, minute)
                 // current is non leap - next is non leap
                 !year.isLeap && monthNumber == MonthNumbers.FEBRUARY && dayOfMonth == MonthDays.FEBRUARY && !nextYear.isLeap ->
-                    LocalDateTime(nextYear, month, MonthDays.FEBRUARY, hour, minute, second, nanosecond)
+                    LocalDateTime(nextYear, month, MonthDays.FEBRUARY, hour, minute)
                 else ->
-                    LocalDateTime(nextYear, month, dayOfMonth, hour, minute, second, nanosecond)
+                    LocalDateTime(nextYear, month, dayOfMonth, hour, minute)
             }
         }
         is RemindiePeriod.None -> this
