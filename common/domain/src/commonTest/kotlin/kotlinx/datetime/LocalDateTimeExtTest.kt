@@ -3,7 +3,11 @@ package kotlinx.datetime
 import com.sedsoftware.common.domain.type.RemindiePeriod
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 class LocalDateTimeExtTest {
     companion object {
         // 31.01.2020 22:59
@@ -152,6 +156,99 @@ class LocalDateTimeExtTest {
         assertEquals(tomorrow2.sameDayAs(tomorrow1), true)
         assertEquals(tomorrow2.sameDayAs(today1), false)
         assertEquals(tomorrow2.sameDayAs(today2), false)
+    }
+
+    @Test
+    fun `test sameWeekAs`() {
+        val sunday1 = LocalDateTime(2020, 11, 29, 1, 2)
+        val monday1 = LocalDateTime(2020, 11, 30, 3, 4)
+        val tuesday = LocalDateTime(2020, 12, 1, 5, 6)
+        val wednesday = LocalDateTime(2020, 12, 2, 7, 8)
+        val thursday = LocalDateTime(2020, 12, 3, 9, 10)
+        val friday = LocalDateTime(2020, 12, 4, 11, 12)
+        val saturday = LocalDateTime(2020, 12, 5, 13, 14)
+        val sunday2 = LocalDateTime(2020, 12, 6, 15, 16)
+        val monday2 = LocalDateTime(2020, 12, 7, 17, 18)
+
+        assertFalse { sunday1.sameWeekAs(monday1) }
+        assertFalse { sunday1.sameWeekAs(tuesday) }
+        assertFalse { sunday1.sameWeekAs(wednesday) }
+        assertFalse { sunday1.sameWeekAs(thursday) }
+        assertFalse { sunday1.sameWeekAs(friday) }
+        assertFalse { sunday1.sameWeekAs(saturday) }
+        assertFalse { sunday1.sameWeekAs(sunday2) }
+        assertFalse { sunday1.sameWeekAs(monday2) }
+        assertFalse { sunday2.sameWeekAs(monday2) }
+
+        assertTrue { monday1.sameWeekAs(tuesday) }
+        assertTrue { monday1.sameWeekAs(wednesday) }
+        assertTrue { monday1.sameWeekAs(thursday) }
+        assertTrue { monday1.sameWeekAs(friday) }
+        assertTrue { monday1.sameWeekAs(saturday) }
+        assertTrue { monday1.sameWeekAs(sunday2) }
+
+        assertTrue { tuesday.sameWeekAs(wednesday) }
+        assertTrue { tuesday.sameWeekAs(thursday) }
+        assertTrue { tuesday.sameWeekAs(friday) }
+        assertTrue { tuesday.sameWeekAs(saturday) }
+        assertTrue { tuesday.sameWeekAs(sunday2) }
+
+        assertTrue { wednesday.sameWeekAs(thursday) }
+        assertTrue { wednesday.sameWeekAs(friday) }
+        assertTrue { wednesday.sameWeekAs(saturday) }
+        assertTrue { wednesday.sameWeekAs(sunday2) }
+
+        assertTrue { thursday.sameWeekAs(friday) }
+        assertTrue { thursday.sameWeekAs(saturday) }
+        assertTrue { thursday.sameWeekAs(sunday2) }
+
+        assertTrue { friday.sameWeekAs(saturday) }
+        assertTrue { friday.sameWeekAs(sunday2) }
+
+        assertTrue { saturday.sameWeekAs(sunday2) }
+    }
+
+    @Test
+    fun `test sameWeekAs with sunday as first day`() {
+        val sunday1 = LocalDateTime(2020, 11, 29, 1, 2)
+        val monday1 = LocalDateTime(2020, 11, 30, 3, 4)
+        val tuesday = LocalDateTime(2020, 12, 1, 5, 6)
+        val wednesday = LocalDateTime(2020, 12, 2, 7, 8)
+        val thursday = LocalDateTime(2020, 12, 3, 9, 10)
+        val friday = LocalDateTime(2020, 12, 4, 11, 12)
+        val saturday = LocalDateTime(2020, 12, 5, 13, 14)
+        val sunday2 = LocalDateTime(2020, 12, 6, 15, 16)
+        val monday2 = LocalDateTime(2020, 12, 7, 17, 18)
+
+        assertFalse { saturday.sameWeekAs(sunday2, true) }
+        assertFalse { sunday2.sameWeekAs(saturday, true) }
+
+        assertTrue { sunday1.sameWeekAs(monday1, true) }
+        assertTrue { sunday1.sameWeekAs(tuesday, true) }
+        assertTrue { sunday1.sameWeekAs(wednesday, true) }
+        assertTrue { sunday1.sameWeekAs(thursday, true) }
+        assertTrue { sunday1.sameWeekAs(friday, true) }
+        assertTrue { sunday1.sameWeekAs(saturday, true) }
+
+        assertTrue { monday1.sameWeekAs(tuesday, true) }
+        assertTrue { monday1.sameWeekAs(wednesday, true) }
+        assertTrue { monday1.sameWeekAs(thursday, true) }
+        assertTrue { monday1.sameWeekAs(friday, true) }
+        assertTrue { monday1.sameWeekAs(saturday, true) }
+
+        assertTrue { tuesday.sameWeekAs(wednesday, true) }
+        assertTrue { tuesday.sameWeekAs(thursday, true) }
+        assertTrue { tuesday.sameWeekAs(friday, true) }
+        assertTrue { tuesday.sameWeekAs(saturday, true) }
+
+        assertTrue { wednesday.sameWeekAs(thursday, true) }
+        assertTrue { wednesday.sameWeekAs(friday, true) }
+        assertTrue { wednesday.sameWeekAs(saturday, true) }
+
+        assertTrue { thursday.sameWeekAs(friday, true) }
+        assertTrue { thursday.sameWeekAs(saturday, true) }
+
+        assertTrue { friday.sameWeekAs(saturday, true) }
     }
 
     @Test
