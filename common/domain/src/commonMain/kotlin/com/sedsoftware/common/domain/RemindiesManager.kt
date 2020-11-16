@@ -3,11 +3,13 @@ package com.sedsoftware.common.domain
 import com.badoo.reaktive.scheduler.ioScheduler
 import com.badoo.reaktive.single.*
 import com.sedsoftware.common.domain.entity.Remindie
+import com.sedsoftware.common.domain.entity.Shot
 import com.sedsoftware.common.domain.entity.toNearestShot
 import com.sedsoftware.common.domain.entity.updateTimeZone
 import com.sedsoftware.common.domain.exception.RemindieDeletionException
 import com.sedsoftware.common.domain.exception.RemindieInsertionException
 import com.sedsoftware.common.domain.exception.RemindieSchedulingException
+import com.sedsoftware.common.domain.exception.ShotsFetchException
 import com.sedsoftware.common.domain.repository.RemindiesRepository
 import com.sedsoftware.common.domain.type.Outcome
 import com.sedsoftware.common.domain.type.RemindiePeriod
@@ -24,10 +26,14 @@ interface RemindiesManager {
     val repository: RemindiesRepository
     val typeChecker: RemindieTypeChecker
 
+    private val timeZone: TimeZone
+        get() = TimeZone.currentSystemDefault()
+
+    private val today: LocalDateTime
+        get() = Clock.System.now().toLocalDateTime(timeZone)
+
     fun add(title: String, date: LocalDateTime, period: RemindiePeriod): Single<Outcome<Unit>> =
         singleFromFunction {
-            val timeZone = TimeZone.currentSystemDefault()
-            val today = Clock.System.now().toLocalDateTime(timeZone)
             val todayAsLong = today.toInstant(timeZone).toEpochMilliseconds()
 
             val new = Remindie(
@@ -44,9 +50,11 @@ interface RemindiesManager {
         }
             .subscribeOn(ioScheduler)
             .map { Outcome.Success(Unit) }
-            .onErrorReturn { Outcome.Error(RemindieInsertionException("Failed to insert new remindie", it)) }
+            .onErrorReturn {
+                Outcome.Error(RemindieInsertionException("Failed to insert new remindie", it))
+            }
 
-    suspend fun remove(remindie: Remindie): Single<Outcome<Unit>> =
+    fun remove(remindie: Remindie): Single<Outcome<Unit>> =
         singleFromFunction {
             val next = remindie.toNearestShot()
             manager.cancelAlarm(next)
@@ -54,9 +62,11 @@ interface RemindiesManager {
         }
             .subscribeOn(ioScheduler)
             .map { Outcome.Success(Unit) }
-            .onErrorReturn { Outcome.Error(RemindieDeletionException("Failed to delete remindie", it)) }
+            .onErrorReturn {
+                Outcome.Error(RemindieDeletionException("Failed to delete remindie", it))
+            }
 
-    suspend fun rescheduleNext(): Single<Outcome<Unit>> =
+    fun rescheduleNext(): Single<Outcome<Unit>> =
         singleFromFunction {
             val shots = repository.getAll()
                 .map { it.toNearestShot() }
@@ -75,11 +85,39 @@ interface RemindiesManager {
         }
             .subscribeOn(ioScheduler)
             .map { Outcome.Success(Unit) }
-            .onErrorReturn { Outcome.Error(RemindieSchedulingException("Failed to reschedule remindies", it)) }
+            .onErrorReturn {
+                Outcome.Error(RemindieSchedulingException("Failed to reschedule remindies", it))
+            }
+
+    fun getShotsForToday(): Single<Outcome<List<Shot>>> =
+        singleFromFunction {
+            repository.getAll()
+                .map { it.toNearestShot() }
+                .filter { !it.isFired }
+                .filter { it.planned.sameDayAs(today) }
+                .sortedBy { it.planned }
+        }
+            .subscribeOn(ioScheduler)
+            .map { Outcome.Success(it) }
+            .onErrorReturn {
+                Outcome.Error(ShotsFetchException("Failed to fetch today shots", it))
+            }
+
+    fun getShotsForDay(day: LocalDateTime): Single<Outcome<List<Shot>>> =
+        singleFromFunction {
+            repository.getAll()
+                .map { it.toNearestShot() }
+                .filter { !it.isFired }
+                .filter { it.planned.sameDayAs(day) }
+                .sortedBy { it.planned }
+        }
+            .subscribeOn(ioScheduler)
+            .map { Outcome.Success(it) }
+            .onErrorReturn {
+                Outcome.Error(ShotsFetchException("Failed to fetch shots for $day", it))
+            }
 
 //    TODO
-//    get for today
-//    get for day
 //    get for current week
 //    get for week
 //    get for current month
