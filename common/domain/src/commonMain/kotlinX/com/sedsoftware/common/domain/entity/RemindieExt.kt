@@ -5,9 +5,7 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.plusPeriod
 import kotlinx.datetime.toLocalDateTime
-import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
 fun Remindie.toNearestShot(today: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)): Shot {
 
     // Not fired yet

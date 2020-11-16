@@ -3,9 +3,6 @@ package kotlinx.datetime
 import com.sedsoftware.common.domain.type.RemindiePeriod
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.time.ExperimentalTime
-
-@ExperimentalTime
 
 class LocalDateTimeExtTest {
     companion object {

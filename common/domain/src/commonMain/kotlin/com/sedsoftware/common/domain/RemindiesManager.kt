@@ -17,9 +17,7 @@ import com.sedsoftware.common.domain.util.AlarmManager
 import com.sedsoftware.common.domain.util.RemindieTypeChecker
 import com.sedsoftware.common.domain.util.Settings
 import kotlinx.datetime.*
-import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
 interface RemindiesManager {
     val settings: Settings
     val manager: AlarmManager
