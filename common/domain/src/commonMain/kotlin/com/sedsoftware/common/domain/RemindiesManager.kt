@@ -1,13 +1,10 @@
 package com.sedsoftware.common.domain
 
 import com.badoo.reaktive.scheduler.ioScheduler
-import com.badoo.reaktive.single.Single
-import com.badoo.reaktive.single.map
-import com.badoo.reaktive.single.onErrorReturn
-import com.badoo.reaktive.single.singleFromFunction
-import com.badoo.reaktive.single.subscribeOn
+import com.badoo.reaktive.single.*
 import com.sedsoftware.common.domain.entity.Remindie
 import com.sedsoftware.common.domain.entity.toNearestShot
+import com.sedsoftware.common.domain.entity.updateTimeZone
 import com.sedsoftware.common.domain.exception.RemindieDeletionException
 import com.sedsoftware.common.domain.exception.RemindieInsertionException
 import com.sedsoftware.common.domain.exception.RemindieSchedulingException
@@ -16,15 +13,13 @@ import com.sedsoftware.common.domain.type.Outcome
 import com.sedsoftware.common.domain.type.RemindiePeriod
 import com.sedsoftware.common.domain.util.AlarmManager
 import com.sedsoftware.common.domain.util.RemindieTypeChecker
-import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toInstant
-import kotlinx.datetime.toLocalDateTime
+import com.sedsoftware.common.domain.util.Settings
+import kotlinx.datetime.*
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 interface RemindiesManager {
+    val settings: Settings
     val manager: AlarmManager
     val repository: RemindiesRepository
     val typeChecker: RemindieTypeChecker
@@ -69,7 +64,12 @@ interface RemindiesManager {
                 .sortedBy { it.planned }
 
             if (shots.isNotEmpty()) {
-                val next = shots.first()
+                val next = if (settings.timeZoneDependent) {
+                    shots.first().updateTimeZone()
+                } else {
+                    shots.first()
+                }
+
                 manager.setAlarm(next)
             }
         }
