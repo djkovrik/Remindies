@@ -11,20 +11,27 @@ import kotlin.time.ExperimentalTime
 class LocalDateTimeExtTest {
     companion object {
         // 31.01.2020 22:59
-        val firstDate = LocalDateTime(year = 2020, monthNumber = 1, dayOfMonth = 31, hour = 22, minute = 59)
+        val firstDate =
+            LocalDateTime(year = 2020, monthNumber = 1, dayOfMonth = 31, hour = 22, minute = 59)
 
         // 31.12.2020 23:59
-        val secondDate = LocalDateTime(year = 2020, monthNumber = 12, dayOfMonth = 31, hour = 23, minute = 59)
+        val secondDate =
+            LocalDateTime(year = 2020, monthNumber = 12, dayOfMonth = 31, hour = 23, minute = 59)
 
         // 14.01.2021 01:02
-        val midday = LocalDateTime(year = 2021, monthNumber = 1, dayOfMonth = 14, hour = 1, minute = 2)
+        val midday =
+            LocalDateTime(year = 2021, monthNumber = 1, dayOfMonth = 14, hour = 1, minute = 2)
 
         val currentTimeZone: TimeZone = TimeZone.currentSystemDefault()
 
-        val today1 = LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 5, hour = 22, minute = 59)
-        val today2 = LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 5, hour = 23, minute = 59)
-        val tomorrow1 = LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 6, hour = 0, minute = 1)
-        val tomorrow2 = LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 6, hour = 23, minute = 59)
+        val today1 =
+            LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 5, hour = 22, minute = 59)
+        val today2 =
+            LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 5, hour = 23, minute = 59)
+        val tomorrow1 =
+            LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 6, hour = 0, minute = 1)
+        val tomorrow2 =
+            LocalDateTime(year = 2020, monthNumber = 11, dayOfMonth = 6, hour = 23, minute = 59)
     }
 
     @Test
@@ -100,31 +107,55 @@ class LocalDateTimeExtTest {
 
     @Test
     fun `test plusPeriod for months`() {
-        secondDate.plusPeriod(RemindiePeriod.Monthly(1), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(2), currentTimeZone).run { assertEquals(dayOfMonth, 28) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(3), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(4), currentTimeZone).run { assertEquals(dayOfMonth, 30) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(5), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(6), currentTimeZone).run { assertEquals(dayOfMonth, 30) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(7), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(8), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(9), currentTimeZone).run { assertEquals(dayOfMonth, 30) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(10), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(11), currentTimeZone).run { assertEquals(dayOfMonth, 30) }
-        secondDate.plusPeriod(RemindiePeriod.Monthly(12), currentTimeZone).run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(1), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(2), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 28) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(3), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(4), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 30) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(5), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(6), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 30) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(7), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(8), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(9), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 30) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(10), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 31) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(11), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 30) }
+        secondDate.plusPeriod(RemindiePeriod.Monthly(12), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 31) }
 
-        midday.plusPeriod(RemindiePeriod.Monthly(1), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(2), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(3), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(4), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(5), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(6), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(7), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(8), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(9), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(10), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(11), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
-        midday.plusPeriod(RemindiePeriod.Monthly(12), currentTimeZone).run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(1), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(2), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(3), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(4), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(5), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(6), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(7), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(8), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(9), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(10), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(11), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
+        midday.plusPeriod(RemindiePeriod.Monthly(12), currentTimeZone)
+            .run { assertEquals(dayOfMonth, 14) }
     }
 
     @Test
@@ -249,6 +280,38 @@ class LocalDateTimeExtTest {
         assertTrue { thursday.sameWeekAs(saturday, true) }
 
         assertTrue { friday.sameWeekAs(saturday, true) }
+    }
+
+    @Test
+    fun `sameMonthAs test`() {
+        val date1 = LocalDateTime(2020, 11, 2, 1, 2)
+        val date2 = LocalDateTime(2020, 11, 30, 3, 4)
+        val date3 = LocalDateTime(2020, 12, 17, 9, 10)
+
+        assertTrue { date1.sameMonthAs(date2) }
+        assertTrue { date2.sameMonthAs(date1) }
+
+        assertFalse { date1.sameMonthAs(date3) }
+        assertFalse { date2.sameMonthAs(date3) }
+
+        assertFalse { date3.sameMonthAs(date1) }
+        assertFalse { date3.sameMonthAs(date1) }
+    }
+
+    @Test
+    fun `sameYearAs test`() {
+        val date1 = LocalDateTime(2020, 11, 2, 1, 2)
+        val date2 = LocalDateTime(2020, 11, 30, 3, 4)
+        val date3 = LocalDateTime(2077, 12, 17, 9, 10)
+
+        assertTrue { date1.sameYearAs(date2) }
+        assertTrue { date2.sameYearAs(date1) }
+
+        assertFalse { date1.sameYearAs(date3) }
+        assertFalse { date2.sameYearAs(date3) }
+
+        assertFalse { date3.sameYearAs(date1) }
+        assertFalse { date3.sameYearAs(date1) }
     }
 
     @Test

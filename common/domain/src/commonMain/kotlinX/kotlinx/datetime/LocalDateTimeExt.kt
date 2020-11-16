@@ -9,7 +9,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.days
 
 fun LocalDateTime.sameDayAs(other: LocalDateTime): Boolean =
-    year == other.year && dayOfYear == other.dayOfYear
+    sameYearAs(other) && dayOfYear == other.dayOfYear
 
 @ExperimentalTime
 fun LocalDateTime.sameWeekAs(
@@ -36,6 +36,12 @@ fun LocalDateTime.sameWeekAs(
 
     return other in lower..upper
 }
+
+fun LocalDateTime.sameMonthAs(other: LocalDateTime): Boolean =
+    sameYearAs(other) && month == other.month
+
+fun LocalDateTime.sameYearAs(other: LocalDateTime): Boolean =
+    year == other.year
 
 fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalDateTime =
     when (period) {
