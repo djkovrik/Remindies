@@ -1,6 +1,8 @@
 package kotlinx.datetime
 
 import com.sedsoftware.common.domain.type.RemindiePeriod
+import com.sedsoftware.common.primitive.days
+import com.sedsoftware.common.primitive.isLeap
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -249,7 +251,6 @@ class LocalDateTimeExtTest {
         val friday = LocalDateTime(2020, 12, 4, 11, 12)
         val saturday = LocalDateTime(2020, 12, 5, 13, 14)
         val sunday2 = LocalDateTime(2020, 12, 6, 15, 16)
-        val monday2 = LocalDateTime(2020, 12, 7, 17, 18)
 
         assertFalse { saturday.sameWeekAs(sunday2, true) }
         assertFalse { sunday2.sameWeekAs(saturday, true) }
@@ -324,5 +325,128 @@ class LocalDateTimeExtTest {
                 assertEquals(minute, 23)
             }
         }
+    }
+
+    @Test
+    fun `getWeekStart test`() {
+        val sunday1 = LocalDateTime(2020, 12, 27, 1, 2)
+        val monday1 = LocalDateTime(2020, 12, 28, 3, 4)
+        val thursday = LocalDateTime(2020, 12, 31, 9, 10)
+        val friday = LocalDateTime(2021, 1, 1, 11, 12)
+        val sunday2 = LocalDateTime(2021, 1, 3, 15, 16)
+        val monday2 = LocalDateTime(2021, 1, 4, 17, 18)
+
+        assertEquals(sunday1.getWeekStart(true).year, 2020)
+        assertEquals(sunday1.getWeekStart(true).monthNumber, 12)
+        assertEquals(sunday1.getWeekStart(true).dayOfMonth, 27)
+
+        assertEquals(monday1.getWeekStart(true).year, 2020)
+        assertEquals(monday1.getWeekStart(true).monthNumber, 12)
+        assertEquals(monday1.getWeekStart(true).dayOfMonth, 27)
+
+        assertEquals(monday1.getWeekStart(false).year, 2020)
+        assertEquals(monday1.getWeekStart(false).monthNumber, 12)
+        assertEquals(monday1.getWeekStart(false).dayOfMonth, 28)
+
+        assertEquals(thursday.getWeekStart(true).year, 2020)
+        assertEquals(thursday.getWeekStart(true).monthNumber, 12)
+        assertEquals(thursday.getWeekStart(true).dayOfMonth, 27)
+
+        assertEquals(thursday.getWeekStart(false).year, 2020)
+        assertEquals(thursday.getWeekStart(false).monthNumber, 12)
+        assertEquals(thursday.getWeekStart(false).dayOfMonth, 28)
+
+        assertEquals(friday.getWeekStart(true).year, 2020)
+        assertEquals(friday.getWeekStart(true).monthNumber, 12)
+        assertEquals(friday.getWeekStart(true).dayOfMonth, 27)
+
+        assertEquals(friday.getWeekStart(false).year, 2020)
+        assertEquals(friday.getWeekStart(false).monthNumber, 12)
+        assertEquals(friday.getWeekStart(false).dayOfMonth, 28)
+
+        assertEquals(sunday2.getWeekStart(false).year, 2020)
+        assertEquals(sunday2.getWeekStart(false).monthNumber, 12)
+        assertEquals(sunday2.getWeekStart(false).dayOfMonth, 28)
+
+        assertEquals(monday2.getWeekStart(true).year, 2021)
+        assertEquals(monday2.getWeekStart(true).monthNumber, 1)
+        assertEquals(monday2.getWeekStart(true).dayOfMonth, 3)
+    }
+
+    @Test
+    fun `getWeekEnd test`() {
+        val sunday1 = LocalDateTime(2020, 12, 27, 1, 2)
+        val monday1 = LocalDateTime(2020, 12, 28, 3, 4)
+        val thursday = LocalDateTime(2020, 12, 31, 9, 10)
+
+        assertEquals(sunday1.getWeekEnd(true).year, 2021)
+        assertEquals(sunday1.getWeekEnd(true).monthNumber, 1)
+        assertEquals(sunday1.getWeekEnd(true).dayOfMonth, 2)
+
+        assertEquals(monday1.getWeekEnd(false).year, 2021)
+        assertEquals(monday1.getWeekEnd(false).monthNumber, 1)
+        assertEquals(monday1.getWeekEnd(false).dayOfMonth, 3)
+
+        assertEquals(thursday.getWeekEnd(true).year, 2021)
+        assertEquals(thursday.getWeekEnd(true).monthNumber, 1)
+        assertEquals(thursday.getWeekEnd(true).dayOfMonth, 2)
+
+        assertEquals(thursday.getWeekEnd(false).year, 2021)
+        assertEquals(thursday.getWeekEnd(false).monthNumber, 1)
+        assertEquals(thursday.getWeekEnd(false).dayOfMonth, 3)
+    }
+
+    @Test
+    fun `getMonthStart test`() {
+        val date1 = LocalDateTime(2020, 10, 1, 1, 2)
+        val date2 = LocalDateTime(2020, 10, 16, 3, 4)
+        val date3 = LocalDateTime(2020, 10, 29, 5, 6)
+
+        assertEquals(date1.getMonthStart().year, date1.year)
+        assertEquals(date2.getMonthStart().year, date1.year)
+        assertEquals(date3.getMonthStart().year, date1.year)
+
+        assertEquals(date1.getMonthStart().monthNumber, date1.monthNumber)
+        assertEquals(date2.getMonthStart().monthNumber, date2.monthNumber)
+        assertEquals(date3.getMonthStart().monthNumber, date3.monthNumber)
+
+        assertEquals(date1.getMonthStart().dayOfMonth, 1)
+        assertEquals(date2.getMonthStart().dayOfMonth, 1)
+        assertEquals(date3.getMonthStart().dayOfMonth, 1)
+
+        assertEquals(date1.getMonthStart().hour, 0)
+        assertEquals(date2.getMonthStart().hour, 0)
+        assertEquals(date3.getMonthStart().hour, 0)
+
+        assertEquals(date1.getMonthStart().minute, 0)
+        assertEquals(date2.getMonthStart().minute, 0)
+        assertEquals(date3.getMonthStart().minute, 0)
+    }
+
+    @Test
+    fun `getMonthEnd test`() {
+        val date1 = LocalDateTime(2020, 1, 1, 1, 2)
+        val date2 = LocalDateTime(2020, 2, 16, 3, 4)
+        val date3 = LocalDateTime(2020, 3, 29, 5, 6)
+
+        assertEquals(date1.getMonthEnd().year, date1.year)
+        assertEquals(date2.getMonthEnd().year, date1.year)
+        assertEquals(date3.getMonthEnd().year, date1.year)
+
+        assertEquals(date1.getMonthEnd().monthNumber, date1.monthNumber)
+        assertEquals(date2.getMonthEnd().monthNumber, date2.monthNumber)
+        assertEquals(date3.getMonthEnd().monthNumber, date3.monthNumber)
+
+        assertEquals(date1.getMonthEnd().dayOfMonth, date1.monthNumber.days(date1.year.isLeap))
+        assertEquals(date2.getMonthEnd().dayOfMonth, date2.monthNumber.days(date2.year.isLeap))
+        assertEquals(date3.getMonthEnd().dayOfMonth, date3.monthNumber.days(date3.year.isLeap))
+
+        assertEquals(date1.getMonthEnd().hour, 23)
+        assertEquals(date2.getMonthEnd().hour, 23)
+        assertEquals(date3.getMonthEnd().hour, 23)
+
+        assertEquals(date1.getMonthEnd().minute, 59)
+        assertEquals(date2.getMonthEnd().minute, 59)
+        assertEquals(date3.getMonthEnd().minute, 59)
     }
 }

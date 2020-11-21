@@ -33,8 +33,8 @@ fun LocalDateTime.sameWeekAs(
         upperBound = upperBound.toInstant(timeZone).plus(1.days).toLocalDateTime(timeZone)
     }
 
-    val lower = lowerBound.shiftToDayStart()
-    val upper = upperBound.shiftToDayEnd()
+    val lower = lowerBound.getDayStart()
+    val upper = upperBound.getDayEnd()
 
     return other in lower..upper
 }
@@ -122,8 +122,36 @@ private fun DayOfWeek.getOrdinal(fromSunday: Boolean): Int =
         DayOfWeek.SUNDAY -> if (fromSunday) 1 else 7
     }
 
-fun LocalDateTime.shiftToDayStart(): LocalDateTime =
+fun LocalDateTime.getDayStart(): LocalDateTime =
     LocalDateTime(year, month, dayOfMonth, 0, 0)
 
-fun LocalDateTime.shiftToDayEnd(): LocalDateTime =
+fun LocalDateTime.getDayEnd(): LocalDateTime =
     LocalDateTime(year, month, dayOfMonth, 23, 59)
+
+@ExperimentalTime
+fun LocalDateTime.getWeekStart(fromSunday: Boolean = false): LocalDateTime {
+    val current = dayOfWeek.getOrdinal(fromSunday)
+    val diff = current - 1
+
+    val timeZone = TimeZone.currentSystemDefault()
+    val weekStart = toInstant(timeZone).minus(diff.days).toLocalDateTime(timeZone)
+
+    return LocalDateTime(weekStart.year, weekStart.month, weekStart.dayOfMonth, 0, 0)
+}
+
+@ExperimentalTime
+fun LocalDateTime.getWeekEnd(fromSunday: Boolean= false): LocalDateTime {
+    val current = dayOfWeek.getOrdinal(fromSunday)
+    val diff = 7 - current
+
+    val timeZone = TimeZone.currentSystemDefault()
+    val weekStart = toInstant(timeZone).plus(diff.days).toLocalDateTime(timeZone)
+
+    return LocalDateTime(weekStart.year, weekStart.month, weekStart.dayOfMonth, 23, 59)
+}
+
+fun LocalDateTime.getMonthStart(): LocalDateTime =
+    LocalDateTime(year, month, 1, 0, 0)
+
+fun LocalDateTime.getMonthEnd(): LocalDateTime =
+    LocalDateTime(year, month, monthNumber.days(year.isLeap), 23, 59)

@@ -15,7 +15,6 @@ class ShotExtTest {
         val newTimeZone = TimeZone.of("GMT+3")
 
         val today = LocalDateTime(2020, 11, 7, 22, 13)
-        val created = LocalDateTime(2020, 11, 7, 12, 13)
         val shot = LocalDateTime(2020, 11, 7, 18, 33)
 
         val remindie = Remindie(
