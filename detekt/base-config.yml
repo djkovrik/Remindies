@@ -75,11 +75,12 @@ complexity:
     includePrivateDeclarations: false
   ComplexMethod:
     active: true
-    threshold: 15
+    threshold: 16
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
     nestingFunctions: [run, let, apply, with, also, use, forEach, isNotNull, ifNull]
+    excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
   LabeledExpression:
     active: false
     ignoredLabels: []
@@ -89,6 +90,7 @@ complexity:
   LongMethod:
     active: true
     threshold: 60
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
   LongParameterList:
     active: true
     functionThreshold: 6
@@ -563,7 +565,7 @@ style:
     maxJumpCount: 1
   MagicNumber:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/*Color.kt', '**/*Shape.kt', '**/*Type.kt']
+    excludes: ['**/commonTest/**', '**/androidTest/**', '**/*Color.kt', '**/*Shape.kt', '**/*Type.kt']
     ignoreNumbers: ['-1', '0', '1', '2']
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false
@@ -610,7 +612,7 @@ style:
     active: false
   ReturnCount:
     active: true
-    max: 2
+    max: 3
     excludedFunctions: 'equals'
     excludeLabeled: false
     excludeReturnFromLambda: true

@@ -1,7 +1,11 @@
 package com.sedsoftware.common.domain
 
 import com.badoo.reaktive.scheduler.ioScheduler
-import com.badoo.reaktive.single.*
+import com.badoo.reaktive.single.Single
+import com.badoo.reaktive.single.map
+import com.badoo.reaktive.single.onErrorReturn
+import com.badoo.reaktive.single.singleFromFunction
+import com.badoo.reaktive.single.subscribeOn
 import com.sedsoftware.common.domain.entity.Remindie
 import com.sedsoftware.common.domain.entity.Shot
 import com.sedsoftware.common.domain.entity.toNearestShot
@@ -16,7 +20,12 @@ import com.sedsoftware.common.domain.type.RemindiePeriod
 import com.sedsoftware.common.domain.util.AlarmManager
 import com.sedsoftware.common.domain.util.RemindieTypeChecker
 import com.sedsoftware.common.domain.util.Settings
-import kotlinx.datetime.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.sameDayAs
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 
 interface RemindiesManager {
     val settings: Settings

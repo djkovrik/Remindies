@@ -15,6 +15,7 @@ val Int.isLeap: Boolean
         else -> false
     }
 
+@Suppress("ComplexMethod")
 fun Int.days(leap: Boolean): Int =
     when (this) {
         MonthNumbers.JANUARY -> MonthDays.JANUARY

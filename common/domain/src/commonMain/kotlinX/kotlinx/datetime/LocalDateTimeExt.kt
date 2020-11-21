@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package kotlinx.datetime
 
 import com.sedsoftware.common.domain.constant.MonthDays
@@ -31,8 +33,8 @@ fun LocalDateTime.sameWeekAs(
         upperBound = upperBound.toInstant(timeZone).plus(1.days).toLocalDateTime(timeZone)
     }
 
-    val lower = lowerBound.shiftToStart()
-    val upper = upperBound.shiftToEnd()
+    val lower = lowerBound.shiftToDayStart()
+    val upper = upperBound.shiftToDayEnd()
 
     return other in lower..upper
 }
@@ -43,6 +45,7 @@ fun LocalDateTime.sameMonthAs(other: LocalDateTime): Boolean =
 fun LocalDateTime.sameYearAs(other: LocalDateTime): Boolean =
     year == other.year
 
+@Suppress("ComplexMethod")
 fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalDateTime =
     when (period) {
         is RemindiePeriod.Hourly -> {
@@ -72,19 +75,34 @@ fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalD
             // leap year hack
             when {
                 // current is leap - next is leap
-                year.isLeap && monthNumber == MonthNumbers.FEBRUARY && dayOfMonth == MonthDays.FEBRUARY_LEAP && nextYear.isLeap ->
+                year.isLeap &&
+                        monthNumber == MonthNumbers.FEBRUARY &&
+                        dayOfMonth == MonthDays.FEBRUARY_LEAP &&
+                        nextYear.isLeap ->
                     LocalDateTime(nextYear, month, MonthDays.FEBRUARY_LEAP, hour, minute)
+
                 // current is leap - next is non leap
-                year.isLeap && monthNumber == MonthNumbers.FEBRUARY && dayOfMonth == MonthDays.FEBRUARY_LEAP && !nextYear.isLeap ->
+                year.isLeap &&
+                        monthNumber == MonthNumbers.FEBRUARY &&
+                        dayOfMonth == MonthDays.FEBRUARY_LEAP &&
+                        !nextYear.isLeap ->
                     LocalDateTime(nextYear, month, MonthDays.FEBRUARY, hour, minute)
+
                 // current is non leap - next is leap
-                !year.isLeap && monthNumber == MonthNumbers.FEBRUARY && dayOfMonth == MonthDays.FEBRUARY && nextYear.isLeap ->
+                !year.isLeap &&
+                        monthNumber == MonthNumbers.FEBRUARY &&
+                        dayOfMonth == MonthDays.FEBRUARY &&
+                        nextYear.isLeap ->
                     LocalDateTime(nextYear, month, MonthDays.FEBRUARY_LEAP, hour, minute)
+
                 // current is non leap - next is non leap
-                !year.isLeap && monthNumber == MonthNumbers.FEBRUARY && dayOfMonth == MonthDays.FEBRUARY && !nextYear.isLeap ->
+                !year.isLeap &&
+                        monthNumber == MonthNumbers.FEBRUARY &&
+                        dayOfMonth == MonthDays.FEBRUARY &&
+                        !nextYear.isLeap ->
                     LocalDateTime(nextYear, month, MonthDays.FEBRUARY, hour, minute)
-                else ->
-                    LocalDateTime(nextYear, month, dayOfMonth, hour, minute)
+
+                else -> LocalDateTime(nextYear, month, dayOfMonth, hour, minute)
             }
         }
         is RemindiePeriod.None -> this
@@ -93,7 +111,6 @@ fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalD
 fun LocalDateTime.moveToZone(from: TimeZone, to: TimeZone): LocalDateTime =
     toInstant(from).toLocalDateTime(to)
 
-@Suppress("MagicNumber")
 private fun DayOfWeek.getOrdinal(fromSunday: Boolean): Int =
     when (this) {
         DayOfWeek.MONDAY -> if (fromSunday) 2 else 1
@@ -105,9 +122,8 @@ private fun DayOfWeek.getOrdinal(fromSunday: Boolean): Int =
         DayOfWeek.SUNDAY -> if (fromSunday) 1 else 7
     }
 
-private fun LocalDateTime.shiftToStart(): LocalDateTime =
+fun LocalDateTime.shiftToDayStart(): LocalDateTime =
     LocalDateTime(year, month, dayOfMonth, 0, 0)
 
-@Suppress("MagicNumber")
-private fun LocalDateTime.shiftToEnd(): LocalDateTime =
+fun LocalDateTime.shiftToDayEnd(): LocalDateTime =
     LocalDateTime(year, month, dayOfMonth, 23, 59)
