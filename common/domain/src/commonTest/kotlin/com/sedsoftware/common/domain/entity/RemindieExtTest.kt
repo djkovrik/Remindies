@@ -4,6 +4,8 @@ import com.sedsoftware.common.domain.type.RemindiePeriod
 import com.sedsoftware.common.domain.type.RemindieType
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.getDayEnd
+import kotlinx.datetime.getDayStart
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -153,5 +155,69 @@ class RemindieExtTest {
                 isFired = false
             )
         )
+    }
+
+    @Test
+    fun `getShots test`() {
+        val timeZone = TimeZone.currentSystemDefault()
+        val created = LocalDateTime(2020, 11, 22, 10, 0)
+        val today = LocalDateTime(2020, 11, 23, 18, 0)
+
+        val remindie1 = Remindie(
+            id = 1,
+            created = created,
+            shot = LocalDateTime(2020, 11, 23, 22, 0),
+            timeZone = timeZone,
+            title = "Daily at 22:00",
+            type = RemindieType.CALL,
+            period = RemindiePeriod.Daily(1)
+        )
+
+        val remindie2 = Remindie(
+            id = 2,
+            created = created,
+            shot = LocalDateTime(2020, 10, 27, 1, 2),
+            timeZone = timeZone,
+            title = "Weekly at 12:13",
+            type = RemindieType.CALL,
+            period = RemindiePeriod.Weekly(1)
+        )
+
+        val remindie3 = Remindie(
+            id = 3,
+            created = created,
+            shot = LocalDateTime(2020, 12, 11, 23, 34),
+            timeZone = timeZone,
+            title = "Monthly at 23:34",
+            type = RemindieType.CALL,
+            period = RemindiePeriod.Monthly(1)
+        )
+
+        // test daily
+        val shots1 = remindie1.getShots(
+            from = LocalDateTime(2020, 11, 20, 22, 0).getDayStart(),
+            to = LocalDateTime(2020, 11, 29, 22, 0).getDayEnd(),
+            today = today
+        )
+
+        assertEquals(shots1.size, 7)
+
+        // test weekly
+        val shots2 = remindie2.getShots(
+            from = LocalDateTime(2020, 11, 20, 22, 0).getDayStart(),
+            to = LocalDateTime(2020, 12, 6, 22, 0).getDayEnd(),
+            today = today
+        )
+
+        assertEquals(shots2.size, 2)
+
+        // test monthly
+        val shots3 = remindie3.getShots(
+            from = LocalDateTime(2020, 11, 20, 22, 0).getDayStart(),
+            to = LocalDateTime(2021, 3, 30, 12, 12).getDayEnd(),
+            today = today
+        )
+
+        assertEquals(shots3.size, 4)
     }
 }

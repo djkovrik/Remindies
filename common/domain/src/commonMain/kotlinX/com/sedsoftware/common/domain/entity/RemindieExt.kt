@@ -26,3 +26,33 @@ fun Remindie.toNearestShot(today: LocalDateTime = Clock.System.now().toLocalDate
 
     return Shot(remindie = this, planned = closest, isFired = false)
 }
+
+fun Remindie.getShots(
+    from: LocalDateTime,
+    to: LocalDateTime,
+    today: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)
+): List<Shot> {
+    val result = mutableListOf<Shot>()
+
+    if (shot > to) {
+        return result
+    }
+
+    var temp = shot
+
+    while (temp <= to) {
+        if (temp in from..to && temp > created) {
+            result.add(
+                Shot(
+                    remindie = this,
+                    planned = temp,
+                    isFired = temp < today
+                )
+            )
+        }
+
+        temp = temp.plusPeriod(period, timeZone)
+    }
+
+    return result
+}
