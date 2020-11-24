@@ -30,7 +30,7 @@ detekt {
 }
 
 tasks.register("runOnGitHub") {
-    dependsOn(":detekt", ":app:lint", ":app:testDebugUnitTest")
+    dependsOn(":detekt", ":android:lint", ":common:domain:testDebugUnitTest")
     group = "custom"
     description = "./gradlew runOnGitHub # runs on GitHub Action"
 }
