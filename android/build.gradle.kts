@@ -31,7 +31,6 @@ android {
 dependencies {
     implementation(project(":common:domain"))
 
-    implementation(compose.ui)
     implementation(compose.material)
 
     implementation(Deps.Android.JetPack.appCompat)
