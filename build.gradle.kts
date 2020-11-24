@@ -8,7 +8,7 @@ allprojects {
         google()
         jcenter()
         mavenLocal()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven("https://plugins.gradle.org/m2/")
         maven("https://dl.bintray.com/arkivanov/maven")
         maven("https://dl.bintray.com/badoo/maven")
         maven("https://kotlin.bintray.com/kotlinx/")
