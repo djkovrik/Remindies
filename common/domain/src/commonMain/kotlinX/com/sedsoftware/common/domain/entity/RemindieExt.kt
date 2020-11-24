@@ -30,7 +30,7 @@ fun Remindie.toNearestShot(today: LocalDateTime = Clock.System.now().toLocalDate
 fun Remindie.getShots(
     from: LocalDateTime,
     to: LocalDateTime,
-    today: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)
+    today: LocalDateTime
 ): List<Shot> {
     val result = mutableListOf<Shot>()
 

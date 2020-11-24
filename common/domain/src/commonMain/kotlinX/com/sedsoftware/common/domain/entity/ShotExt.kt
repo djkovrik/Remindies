@@ -3,7 +3,7 @@ package com.sedsoftware.common.domain.entity
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.moveToZone
 
-fun Shot.updateTimeZone(current: TimeZone = TimeZone.currentSystemDefault()): Shot {
+fun Shot.updateTimeZone(current: TimeZone): Shot {
 
     if (remindie.timeZone == current) {
         return this

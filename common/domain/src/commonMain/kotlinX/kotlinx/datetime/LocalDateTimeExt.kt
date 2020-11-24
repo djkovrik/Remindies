@@ -155,3 +155,9 @@ fun LocalDateTime.getMonthStart(): LocalDateTime =
 
 fun LocalDateTime.getMonthEnd(): LocalDateTime =
     LocalDateTime(year, month, monthNumber.days(year.isLeap), 23, 59)
+
+fun LocalDateTime.getYearStart(): LocalDateTime =
+    LocalDateTime(year, 1, 1, 0, 0)
+
+fun LocalDateTime.getYearEnd(): LocalDateTime =
+    LocalDateTime(year, 12, 31, 23, 59)
