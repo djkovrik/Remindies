@@ -1,5 +1,8 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues/>
-  <CurrentIssues/>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ComplexMethod:TimeExtensions.kt$fun Int.days(leap: Boolean): Int</ID>
+    <ID>TooGenericExceptionCaught:RemindiesManager.kt$RemindiesManager$exception: Exception</ID>
+  </CurrentIssues>
 </SmellBaseline>
