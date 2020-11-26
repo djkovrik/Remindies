@@ -1,4 +1,5 @@
 include(
+    ":common:domain",
     ":android",
-    ":common:domain"
+    ":desktop"
 )

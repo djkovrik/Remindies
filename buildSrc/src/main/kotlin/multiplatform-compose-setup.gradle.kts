@@ -20,5 +20,10 @@ kotlin {
                 api(Deps.Android.JetPack.ktx)
             }
         }
+        named("desktopMain") {
+            dependencies {
+                api(compose.desktop.common)
+            }
+        }
     }
 }
