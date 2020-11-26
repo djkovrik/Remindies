@@ -32,6 +32,7 @@ dependencies {
     implementation(Deps.JetBrains.Compose.gradlePlugin)
     implementation(Deps.JetBrains.Kotlin.gradlePlugin)
     implementation(Deps.Android.Build.gradlePlugin)
+    implementation(Deps.Core.SQLDelight.gradlePlugin)
 }
 
 kotlin {

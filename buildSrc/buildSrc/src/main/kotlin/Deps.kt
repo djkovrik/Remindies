@@ -53,5 +53,13 @@ object Deps {
             const val utils = "com.badoo.reaktive:utils:$VERSION"
             const val coroutinesInterop = "com.badoo.reaktive:coroutines-interop:$VERSION"
         }
+
+        object SQLDelight {
+            private const val VERSION = "1.4.4"
+
+            const val gradlePlugin = "com.squareup.sqldelight:gradle-plugin:$VERSION"
+            const val androidDriver = "com.squareup.sqldelight:android-driver:$VERSION"
+            const val sqliteDriver = "com.squareup.sqldelight:sqlite-driver:$VERSION"
+        }
     }
 }

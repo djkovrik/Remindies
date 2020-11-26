@@ -98,6 +98,7 @@ complexity:
     ignoreDefaultParameters: false
     ignoreDataClasses: true
     ignoreAnnotated: []
+    excludes: [ '**/build/generated/**' ]
   MethodOverloading:
     active: false
     threshold: 6
@@ -154,6 +155,7 @@ empty-blocks:
   EmptyFunctionBlock:
     active: true
     ignoreOverridden: false
+    excludes: [ '**/build/generated/**' ]
   EmptyIfBlock:
     active: true
   EmptyInitBlock:
@@ -565,7 +567,7 @@ style:
     maxJumpCount: 1
   MagicNumber:
     active: true
-    excludes: ['**/commonTest/**', '**/androidTest/**', '**/*Color.kt', '**/*Shape.kt', '**/*Type.kt']
+    excludes: ['**/build/generated/**', '**/commonTest/**', '**/androidTest/**', '**/*Color.kt', '**/*Shape.kt', '**/*Type.kt']
     ignoreNumbers: ['-1', '0', '1', '2']
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false
