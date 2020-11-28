@@ -5,7 +5,7 @@ import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 
 @Suppress("FunctionName")
-fun RemindieDatabaseDriverFactory(context: Context): SqlDriver =
+fun RemindieDatabaseDriver(context: Context): SqlDriver =
     AndroidSqliteDriver(
         schema = RemindieDatabase.Schema,
         context = context,
