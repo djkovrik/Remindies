@@ -6,6 +6,7 @@ import com.badoo.reaktive.single.map
 import com.badoo.reaktive.single.onErrorReturn
 import com.badoo.reaktive.single.singleFromFunction
 import com.badoo.reaktive.single.subscribeOn
+import com.sedsoftware.common.database.RemindieDatabase
 import com.sedsoftware.common.domain.entity.Remindie
 import com.sedsoftware.common.domain.entity.Shot
 import com.sedsoftware.common.domain.entity.getShots
@@ -17,6 +18,11 @@ import com.sedsoftware.common.domain.exception.RemindieSchedulingException
 import com.sedsoftware.common.domain.exception.ShotsFetchingException
 import com.sedsoftware.common.domain.type.Outcome
 import com.sedsoftware.common.domain.type.RemindiePeriod
+import com.sedsoftware.common.tools.base.RemindieAlarmManager
+import com.sedsoftware.common.tools.base.RemindieSettings
+import com.sedsoftware.common.tools.shared.RemindieTypeChecker
+import com.sedsoftware.common.tools.shared.RemindiesRepository
+import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.getMonthEnd
@@ -27,18 +33,26 @@ import kotlinx.datetime.getYearEnd
 import kotlinx.datetime.getYearStart
 import kotlinx.datetime.sameDayAs
 import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-interface RemindiesManager {
+class RemindiesController(
+    dependencies: Dependencies,
+    private val timeZone: TimeZone = TimeZone.currentSystemDefault(),
+    private val today: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)
+) {
 
-    val settings: Settings
-    val manager: AlarmManager
-    val repository: RemindiesRepository
-    val typeChecker: RemindieTypeChecker
+    interface Dependencies {
+        val database: RemindieDatabase
+        val manager: RemindieAlarmManager
+        val settings: RemindieSettings
+    }
 
-    val timeZone: TimeZone
-    val today: LocalDateTime
+    private val repository = RemindiesRepository(dependencies.database)
+    private val typeChecker = RemindieTypeChecker()
+    private val manager = dependencies.manager
+    private val settings = dependencies.settings
 
     fun add(title: String, date: LocalDateTime, period: RemindiePeriod): Single<Outcome<Unit>> =
         singleFromFunction {

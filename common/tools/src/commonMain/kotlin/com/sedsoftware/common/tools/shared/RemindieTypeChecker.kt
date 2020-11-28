@@ -1,4 +1,4 @@
-package com.sedsoftware.common.tools
+package com.sedsoftware.common.tools.shared
 
 import com.sedsoftware.common.domain.type.RemindieType
 

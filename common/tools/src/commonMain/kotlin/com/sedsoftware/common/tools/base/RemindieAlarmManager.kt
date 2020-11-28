@@ -1,8 +1,8 @@
-package com.sedsoftware.common.tools
+package com.sedsoftware.common.tools.base
 
 import com.sedsoftware.common.domain.entity.Shot
 
-interface AlarmManager {
+interface RemindieAlarmManager {
     fun setAlarm(shot: Shot)
     fun cancelAlarm(shot: Shot)
 }
