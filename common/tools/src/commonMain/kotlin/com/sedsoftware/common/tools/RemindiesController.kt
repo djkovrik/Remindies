@@ -59,7 +59,7 @@ class RemindiesController(
             val todayAsLong = today.toInstant(timeZone).toEpochMilliseconds()
 
             val new = Remindie(
-                id = todayAsLong,
+                timestamp = todayAsLong,
                 created = today,
                 shot = date,
                 timeZone = timeZone,
