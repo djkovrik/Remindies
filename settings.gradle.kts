@@ -1,6 +1,7 @@
 include(
-    ":common:domain",
+    ":common:tools",
     ":common:database",
+    ":common:domain",
     ":android",
     ":desktop"
 )

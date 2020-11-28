@@ -1,4 +1,4 @@
-package com.sedsoftware.common.domain.util
+package com.sedsoftware.common.tools
 
 import com.sedsoftware.common.domain.entity.Shot
 

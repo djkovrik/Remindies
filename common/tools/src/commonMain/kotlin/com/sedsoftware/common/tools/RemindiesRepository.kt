@@ -1,4 +1,4 @@
-package com.sedsoftware.common.domain.repository
+package com.sedsoftware.common.tools
 
 import com.sedsoftware.common.domain.entity.Remindie
 

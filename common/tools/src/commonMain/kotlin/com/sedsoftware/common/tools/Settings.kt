@@ -1,4 +1,4 @@
-package com.sedsoftware.common.domain.util
+package com.sedsoftware.common.tools
 
 interface Settings {
     var timeZoneDependent: Boolean

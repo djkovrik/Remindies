@@ -1,4 +1,4 @@
-package com.sedsoftware.common.domain
+package com.sedsoftware.common.tools
 
 import com.badoo.reaktive.scheduler.ioScheduler
 import com.badoo.reaktive.single.Single
@@ -15,12 +15,8 @@ import com.sedsoftware.common.domain.exception.RemindieDeletionException
 import com.sedsoftware.common.domain.exception.RemindieInsertionException
 import com.sedsoftware.common.domain.exception.RemindieSchedulingException
 import com.sedsoftware.common.domain.exception.ShotsFetchingException
-import com.sedsoftware.common.domain.repository.RemindiesRepository
 import com.sedsoftware.common.domain.type.Outcome
 import com.sedsoftware.common.domain.type.RemindiePeriod
-import com.sedsoftware.common.domain.util.AlarmManager
-import com.sedsoftware.common.domain.util.RemindieTypeChecker
-import com.sedsoftware.common.domain.util.Settings
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.getMonthEnd

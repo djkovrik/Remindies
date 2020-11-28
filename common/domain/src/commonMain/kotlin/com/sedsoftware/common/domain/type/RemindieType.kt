@@ -18,9 +18,8 @@ enum class RemindieType {
     CALL,
     MEET,
     PAY,
-    SELL,
     TALK,
-    WRITE,
+    MESSAGE,
 
     // No type
     UNKNOWN;
