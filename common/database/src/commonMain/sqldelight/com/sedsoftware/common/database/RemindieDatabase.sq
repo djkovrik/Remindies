@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS RemindieEntity (
+    id INTEGER as Long PRIMARY KEY,
+    created TEXT NOT NULL,
+    shot TEXT NOT NULL,
+    timeZone TEXT NOT NULL,
+    title TEXT NOT NULL,
+    type TEXT NOT NULL,
+    period TEXT NOT NULL
+);
+
+select:
+SELECT *
+FROM RemindieEntity
+WHERE id = :id;
+
+selectAll:
+SELECT *
+FROM RemindieEntity;
+
+delete:
+DELETE FROM RemindieEntity
+WHERE id = :id;
+
+insert:
+INSERT INTO RemindieEntity (id, created, shot, timeZone, title, type, period)
+VALUES (:id, :created, :shot, :timeZone, :title, :type, :period);
