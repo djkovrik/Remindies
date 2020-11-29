@@ -161,3 +161,5 @@ fun LocalDateTime.getYearStart(): LocalDateTime =
 
 fun LocalDateTime.getYearEnd(): LocalDateTime =
     LocalDateTime(year, 12, 31, 23, 59)
+
+fun LocalDateTime?.available(): Boolean = this != null
