@@ -1,4 +1,7 @@
 include(
+    ":common:screens:add",
+    ":common:screens:calendar",
+    ":common:screens:today",
     ":common:tools",
     ":common:database",
     ":common:domain",
