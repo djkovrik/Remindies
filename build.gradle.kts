@@ -16,7 +16,7 @@ allprojects {
 }
 
 detekt {
-    input = files("$projectDir/common/")
+    input = files("$projectDir/android/", "$projectDir/common/", "$projectDir/desktop/")
     config = files("$projectDir/detekt/base-config.yml")
     baseline = file("$projectDir/detekt/baseline.xml")
     parallel = true

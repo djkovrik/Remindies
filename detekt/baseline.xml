@@ -2,7 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ComplexMethod:TimeExtensions.kt$fun Int.days(leap: Boolean): Int</ID>
-    <ID>TooGenericExceptionCaught:RemindiesManager.kt$RemindiesManager$exception: Exception</ID>
+    <ID>MagicNumber:build.gradle.kts$1000</ID>
+    <ID>MagicNumber:build.gradle.kts$21</ID>
+    <ID>MagicNumber:build.gradle.kts$30</ID>
   </CurrentIssues>
 </SmellBaseline>
