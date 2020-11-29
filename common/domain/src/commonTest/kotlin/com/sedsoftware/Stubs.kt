@@ -14,7 +14,7 @@ object Stubs {
 
     val remindiesInOwnTimeZone: List<Remindie> = listOf(
         Remindie(
-            id = 1,
+            timestamp = 1,
             created = today,
             shot = LocalDateTime(2020, 11, 6, 15, 35),
             timeZone = timeZone,
@@ -24,7 +24,7 @@ object Stubs {
         ),
 
         Remindie(
-            id = 2,
+            timestamp = 2,
             created = today,
             shot = LocalDateTime(2020, 11, 5, 12, 0),
             timeZone = timeZone,
@@ -34,7 +34,7 @@ object Stubs {
         ),
 
         Remindie(
-            id = 3,
+            timestamp = 3,
             created = today,
             shot = LocalDateTime(2020, 11, 6, 8, 0),
             timeZone = timeZone,
@@ -44,7 +44,7 @@ object Stubs {
         ),
 
         Remindie(
-            id = 4,
+            timestamp = 4,
             created = today,
             shot = LocalDateTime(2020, 11, 6, 11, 22),
             timeZone = timeZone,
@@ -54,7 +54,7 @@ object Stubs {
         ),
 
         Remindie(
-            id = 5,
+            timestamp = 5,
             created = today,
             shot = LocalDateTime(2020, 11, 7, 21, 30),
             timeZone = timeZone,
@@ -64,7 +64,7 @@ object Stubs {
         ),
 
         Remindie(
-            id = 6,
+            timestamp = 6,
             created = today,
             shot = LocalDateTime(2020, 11, 8, 16, 0),
             timeZone = timeZone,
@@ -74,7 +74,7 @@ object Stubs {
         ),
 
         Remindie(
-            id = 7,
+            timestamp = 7,
             created = today,
             shot = LocalDateTime(2020, 11, 8, 18, 0),
             timeZone = timeZone,
@@ -84,7 +84,7 @@ object Stubs {
         ),
 
         Remindie(
-            id = 8,
+            timestamp = 8,
             created = today,
             shot = LocalDateTime(2020, 12, 31, 23, 0),
             timeZone = timeZone,

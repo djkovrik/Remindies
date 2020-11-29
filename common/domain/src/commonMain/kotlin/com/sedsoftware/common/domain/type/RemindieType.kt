@@ -18,10 +18,14 @@ enum class RemindieType {
     CALL,
     MEET,
     PAY,
-    SELL,
     TALK,
-    WRITE,
+    MESSAGE,
 
     // No type
     UNKNOWN;
+
+    companion object {
+        fun toString(type: RemindieType): String = type.name
+        fun fromString(name: String): RemindieType = values().find { it.name == name } ?: UNKNOWN
+    }
 }

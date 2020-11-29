@@ -6,7 +6,8 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 
 data class Remindie(
-    val id: Long,
+    val id: Long = 0,
+    val timestamp: Long,
     val created: LocalDateTime,
     val shot: LocalDateTime,
     val timeZone: TimeZone,

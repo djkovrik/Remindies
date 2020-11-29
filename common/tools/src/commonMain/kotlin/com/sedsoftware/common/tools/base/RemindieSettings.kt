@@ -1,6 +1,6 @@
-package com.sedsoftware.common.domain.util
+package com.sedsoftware.common.tools.base
 
-interface Settings {
+interface RemindieSettings {
     var timeZoneDependent: Boolean
     var startFromSunday: Boolean
 }
