@@ -18,7 +18,7 @@ class ShotExtTest {
         val shot = LocalDateTime(2020, 11, 7, 18, 33)
 
         val remindie = Remindie(
-            id = 1234,
+            timestamp = 1234,
             created = today,
             shot = shot,
             timeZone = currentTimeZone,

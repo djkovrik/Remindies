@@ -21,7 +21,7 @@ class RemindieExtTest {
         val shot1 = LocalDateTime(2020, 11, 7, 18, 33)
 
         val remindie1 = Remindie(
-            id = 1,
+            timestamp = 1,
             created = created1,
             shot = shot1,
             timeZone = timeZone,
@@ -45,7 +45,7 @@ class RemindieExtTest {
         val shot2 = LocalDateTime(2020, 11, 7, 18, 33)
 
         val remindie2 = Remindie(
-            id = 2,
+            timestamp = 2,
             created = created2,
             shot = shot2,
             timeZone = timeZone,
@@ -69,7 +69,7 @@ class RemindieExtTest {
         val shot3 = LocalDateTime(2020, 11, 7, 18, 33)
 
         val remindie3 = Remindie(
-            id = 3,
+            timestamp = 3,
             created = created3,
             shot = shot3,
             timeZone = timeZone,
@@ -92,7 +92,7 @@ class RemindieExtTest {
         val shot4 = LocalDateTime(2020, 11, 7, 18, 33)
 
         val remindie4 = Remindie(
-            id = 4,
+            timestamp = 4,
             created = created4,
             shot = shot4,
             timeZone = timeZone,
@@ -115,7 +115,7 @@ class RemindieExtTest {
         val shot5 = LocalDateTime(2020, 11, 7, 18, 33)
 
         val remindie5 = Remindie(
-            id = 5,
+            timestamp = 5,
             created = created5,
             shot = shot5,
             timeZone = timeZone,
@@ -138,7 +138,7 @@ class RemindieExtTest {
         val shot6 = LocalDateTime(2020, 11, 7, 18, 33)
 
         val remindie6 = Remindie(
-            id = 6,
+            timestamp = 6,
             created = created6,
             shot = shot6,
             timeZone = timeZone,
@@ -164,7 +164,7 @@ class RemindieExtTest {
         val today = LocalDateTime(2020, 11, 23, 18, 0)
 
         val remindie1 = Remindie(
-            id = 1,
+            timestamp = 1,
             created = created,
             shot = LocalDateTime(2020, 11, 23, 22, 0),
             timeZone = timeZone,
@@ -174,7 +174,7 @@ class RemindieExtTest {
         )
 
         val remindie2 = Remindie(
-            id = 2,
+            timestamp = 2,
             created = created,
             shot = LocalDateTime(2020, 10, 27, 1, 2),
             timeZone = timeZone,
@@ -184,7 +184,7 @@ class RemindieExtTest {
         )
 
         val remindie3 = Remindie(
-            id = 3,
+            timestamp = 3,
             created = created,
             shot = LocalDateTime(2020, 12, 11, 23, 34),
             timeZone = timeZone,
