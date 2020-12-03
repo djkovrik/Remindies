@@ -24,7 +24,8 @@ class ShotExtTest {
             timeZone = currentTimeZone,
             title = "Daily at 18:33, next shot at 8/11/2020 at 18:33",
             type = RemindieType.CAFE,
-            period = RemindiePeriod.Daily(1)
+            period = RemindiePeriod.DAILY,
+            each = 1
         )
 
         val initialShot = remindie.toNearestShot(today = today)

@@ -20,11 +20,11 @@ internal interface AddNewOneStore : Store<Intent, State, Label> {
 
     data class State(
         val title: String = "",
-        val each: Int = 0,
         val shot: LocalDateTime? = null,
         val periodical: Boolean = false,
         val saveEnabled: Boolean = false,
-        val period: RemindiePeriod = RemindiePeriod.None
+        val period: RemindiePeriod = RemindiePeriod.NONE,
+        val each: Int = 0
     )
 
     sealed class Label {

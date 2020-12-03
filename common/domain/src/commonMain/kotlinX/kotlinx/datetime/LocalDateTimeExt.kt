@@ -46,22 +46,22 @@ fun LocalDateTime.sameYearAs(other: LocalDateTime): Boolean =
     year == other.year
 
 @Suppress("ComplexMethod")
-fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalDateTime =
+fun LocalDateTime.plusPeriod(period: RemindiePeriod, each: Int, timeZone: TimeZone): LocalDateTime =
     when (period) {
-        is RemindiePeriod.Hourly -> {
-            toInstant(timeZone).plus(period.each, DateTimeUnit.HOUR, timeZone).toLocalDateTime(timeZone)
+        RemindiePeriod.HOURLY -> {
+            toInstant(timeZone).plus(each, DateTimeUnit.HOUR, timeZone).toLocalDateTime(timeZone)
         }
-        is RemindiePeriod.Daily -> {
-            toInstant(timeZone).plus(period.each, DateTimeUnit.DAY, timeZone).toLocalDateTime(timeZone)
+        RemindiePeriod.DAILY -> {
+            toInstant(timeZone).plus(each, DateTimeUnit.DAY, timeZone).toLocalDateTime(timeZone)
         }
-        is RemindiePeriod.Weekly -> {
-            toInstant(timeZone).plus(period.each, DateTimeUnit.WEEK, timeZone).toLocalDateTime(timeZone)
+        RemindiePeriod.WEEKLY -> {
+            toInstant(timeZone).plus(each, DateTimeUnit.WEEK, timeZone).toLocalDateTime(timeZone)
         }
-        is RemindiePeriod.Monthly -> {
-            val yearModifier = (monthNumber + period.each) / Month.values().size
+        RemindiePeriod.MONTHLY -> {
+            val yearModifier = (monthNumber + each) / Month.values().size
             val nextYear = year + yearModifier
 
-            var nextMonthNumber = (monthNumber + period.each) % Month.values().size
+            var nextMonthNumber = (monthNumber + each) % Month.values().size
             if (nextMonthNumber == 0) nextMonthNumber++
 
             val daysInNextMonth = nextMonthNumber.days(nextYear.isLeap)
@@ -69,8 +69,8 @@ fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalD
 
             LocalDateTime(nextYear, nextMonthNumber, dayOfNextMonth, hour, minute)
         }
-        is RemindiePeriod.Yearly -> {
-            val nextYear = year + period.each
+        RemindiePeriod.YEARLY -> {
+            val nextYear = year + each
 
             // leap year hack
             when {
@@ -105,7 +105,7 @@ fun LocalDateTime.plusPeriod(period: RemindiePeriod, timeZone: TimeZone): LocalD
                 else -> LocalDateTime(nextYear, month, dayOfMonth, hour, minute)
             }
         }
-        is RemindiePeriod.None -> this
+        RemindiePeriod.NONE -> this
     }
 
 fun LocalDateTime.moveToZone(from: TimeZone, to: TimeZone): LocalDateTime =
@@ -140,7 +140,7 @@ fun LocalDateTime.getWeekStart(fromSunday: Boolean = false): LocalDateTime {
 }
 
 @ExperimentalTime
-fun LocalDateTime.getWeekEnd(fromSunday: Boolean= false): LocalDateTime {
+fun LocalDateTime.getWeekEnd(fromSunday: Boolean = false): LocalDateTime {
     val current = dayOfWeek.getOrdinal(fromSunday)
     val diff = 7 - current
 

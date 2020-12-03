@@ -75,7 +75,7 @@ internal class AddNewOneStoreProvider @ExperimentalTime constructor(
                 period = result.value,
             )
             is Result.DataUpdated -> copy(
-                each = if (period != RemindiePeriod.None && each == 0) 1 else each,
+                each = if (period != RemindiePeriod.NONE && each == 0) 1 else each,
                 saveEnabled = title.isNotEmpty() && shot.available()
             )
         }

@@ -14,14 +14,14 @@ fun Remindie.toNearestShot(today: LocalDateTime = Clock.System.now().toLocalDate
     }
 
     // Already fired for oneshot
-    if (period == RemindiePeriod.None) {
+    if (period == RemindiePeriod.NONE) {
         return Shot(remindie = this, planned = shot, isFired = true)
     }
 
     var closest: LocalDateTime = shot
 
     while (closest < today) {
-        closest = closest.plusPeriod(period, timeZone)
+        closest = closest.plusPeriod(period, each, timeZone)
     }
 
     return Shot(remindie = this, planned = closest, isFired = false)
@@ -51,7 +51,7 @@ fun Remindie.getShots(
             )
         }
 
-        temp = temp.plusPeriod(period, timeZone)
+        temp = temp.plusPeriod(period, each, timeZone)
     }
 
     return result

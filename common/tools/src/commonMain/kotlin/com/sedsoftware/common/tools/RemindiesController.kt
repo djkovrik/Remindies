@@ -54,7 +54,7 @@ class RemindiesController(
     private val manager = dependencies.manager
     private val settings = dependencies.settings
 
-    fun add(title: String, date: LocalDateTime, period: RemindiePeriod): Single<Outcome<Unit>> =
+    fun add(title: String, date: LocalDateTime, period: RemindiePeriod, each: Int): Single<Outcome<Unit>> =
         singleFromFunction {
             val todayAsLong = today.toInstant(timeZone).toEpochMilliseconds()
 
@@ -65,7 +65,8 @@ class RemindiesController(
                 timeZone = timeZone,
                 title = title,
                 type = typeChecker.getType(title),
-                period = period
+                period = period,
+                each = each
             )
 
             repository.insert(new)
