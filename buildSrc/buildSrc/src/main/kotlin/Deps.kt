@@ -10,7 +10,7 @@ object Deps {
         }
 
         object Compose {
-            private const val VERSION = "0.2.0-build128"
+            private const val VERSION = "0.2.0-build132"
             const val gradlePlugin = "org.jetbrains.compose:compose-gradle-plugin:$VERSION"
         }
 
