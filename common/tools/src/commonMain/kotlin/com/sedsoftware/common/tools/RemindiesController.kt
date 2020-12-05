@@ -40,21 +40,16 @@ import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 class RemindiesController(
-    dependencies: Dependencies,
+    private val database: RemindieDatabase,
+    private val manager: RemindieAlarmManager,
+    private val settings: RemindieSettings,
     private val timeZone: TimeZone = TimeZone.currentSystemDefault(),
     private val today: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)
 ) {
 
-    interface Dependencies {
-        val database: RemindieDatabase
-        val manager: RemindieAlarmManager
-        val settings: RemindieSettings
-    }
-
-    private val repository = RemindiesRepository(dependencies.database)
+    private val repository = RemindiesRepository(database)
     private val typeChecker = RemindieTypeChecker()
-    private val manager = dependencies.manager
-    private val settings = dependencies.settings
+
 
     fun add(title: String, shot: LocalDateTime, period: RemindiePeriod, each: Int): Completable =
         completableFromFunction {

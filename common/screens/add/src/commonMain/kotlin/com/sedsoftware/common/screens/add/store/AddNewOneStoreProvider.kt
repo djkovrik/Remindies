@@ -5,11 +5,14 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
 import com.badoo.reaktive.completable.Completable
+import com.sedsoftware.common.database.RemindieDatabase
 import com.sedsoftware.common.domain.type.RemindiePeriod
 import com.sedsoftware.common.screens.add.store.AddNewOneStore.Intent
 import com.sedsoftware.common.screens.add.store.AddNewOneStore.Label
 import com.sedsoftware.common.screens.add.store.AddNewOneStore.State
 import com.sedsoftware.common.tools.RemindiesController
+import com.sedsoftware.common.tools.base.RemindieAlarmManager
+import com.sedsoftware.common.tools.base.RemindieSettings
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.available
 import kotlin.time.ExperimentalTime
@@ -17,8 +20,12 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 internal class AddNewOneStoreProvider @ExperimentalTime constructor(
     private val storeFactory: StoreFactory,
-    private val controller: RemindiesController
+    database: RemindieDatabase,
+    manager: RemindieAlarmManager,
+    settings: RemindieSettings
 ) {
+
+    private val controller = RemindiesController(database, manager, settings)
 
     fun provide(): AddNewOneStore =
         object : AddNewOneStore, Store<Intent, State, Label> by storeFactory.create(
