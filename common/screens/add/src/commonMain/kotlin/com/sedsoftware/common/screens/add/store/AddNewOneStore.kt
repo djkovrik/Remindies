@@ -28,6 +28,6 @@ internal interface AddNewOneStore : Store<Intent, State, Label> {
     )
 
     sealed class Label {
-        data class ErrorCaught(val exception: Exception) : Label()
+        data class ErrorCaught(val throwable: Throwable) : Label()
     }
 }

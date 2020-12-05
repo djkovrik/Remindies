@@ -14,6 +14,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.available
 import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 internal class AddNewOneStoreProvider @ExperimentalTime constructor(
     private val storeFactory: StoreFactory,
     private val controller: RemindiesController
@@ -44,7 +45,9 @@ internal class AddNewOneStoreProvider @ExperimentalTime constructor(
                 is Intent.SetPeriodEach -> dispatch(Result.PeriodEachChanged(intent.value))
                 is Intent.SetPeriodical -> dispatch(Result.PeriodicalSet(intent.value))
                 is Intent.SetPeriod -> dispatch(Result.PeriodSelected(intent.value))
-                is Intent.Save -> saveToDb(getState).subscribeScoped()
+                is Intent.Save -> saveToDb(getState).subscribeScoped(
+                    onError = { publish(Label.ErrorCaught(it)) }
+                )
             }
 
             if (intent !is Intent.Save) {
@@ -53,7 +56,14 @@ internal class AddNewOneStoreProvider @ExperimentalTime constructor(
         }
 
         private fun saveToDb(getState: () -> State): Completable {
-            TODO()
+            val state = getState()
+
+            return controller.add(
+                title = state.title,
+                shot = state.shot!!,
+                period = state.period,
+                each = state.each
+            )
         }
     }
 
