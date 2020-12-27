@@ -20,7 +20,8 @@ class RemindiesRepository(
                 timeZone = remindie.timeZone.id,
                 title = remindie.title,
                 type = RemindieType.toString(remindie.type),
-                period = RemindiePeriod.toString(remindie.period)
+                period = remindie.period.str,
+                each = remindie.each
             )
     }
 
@@ -31,7 +32,7 @@ class RemindiesRepository(
 
     fun getAll(): List<Remindie> =
         database.remindieDatabaseQueries
-            .selectAll { id, timestamp, created, shot, timeZone, title, type, period ->
+            .selectAll { id, timestamp, created, shot, timeZone, title, type, period, each ->
                 Remindie(
                     id = id,
                     timestamp = timestamp,
@@ -40,7 +41,8 @@ class RemindiesRepository(
                     timeZone = TimeZone.of(timeZone),
                     title = title,
                     type = RemindieType.fromString(type),
-                    period = RemindiePeriod.fromString(period)
+                    period = RemindiePeriod.valueOf(period),
+                    each = each
                 )
             }
             .executeAsList()

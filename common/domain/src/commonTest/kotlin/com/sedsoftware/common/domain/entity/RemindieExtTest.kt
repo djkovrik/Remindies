@@ -27,7 +27,8 @@ class RemindieExtTest {
             timeZone = timeZone,
             title = "Oneshot - not fired",
             type = RemindieType.CALL,
-            period = RemindiePeriod.None
+            period = RemindiePeriod.NONE,
+            each = 0
         )
 
         assertEquals(
@@ -51,7 +52,8 @@ class RemindieExtTest {
             timeZone = timeZone,
             title = "Oneshot - fired",
             type = RemindieType.CALL,
-            period = RemindiePeriod.None
+            period = RemindiePeriod.NONE,
+            each = 0
         )
 
         assertEquals(
@@ -75,7 +77,8 @@ class RemindieExtTest {
             timeZone = timeZone,
             title = "Oneshot - hourly 3",
             type = RemindieType.CALL,
-            period = RemindiePeriod.Hourly(3)
+            period = RemindiePeriod.HOURLY,
+            each = 3
         )
 
         assertEquals(
@@ -98,7 +101,8 @@ class RemindieExtTest {
             timeZone = timeZone,
             title = "Oneshot - daily 2",
             type = RemindieType.CALL,
-            period = RemindiePeriod.Daily(2)
+            period = RemindiePeriod.DAILY,
+            each = 2
         )
 
         assertEquals(
@@ -121,7 +125,8 @@ class RemindieExtTest {
             timeZone = timeZone,
             title = "Oneshot - weekly 2",
             type = RemindieType.CALL,
-            period = RemindiePeriod.Weekly(2)
+            period = RemindiePeriod.WEEKLY,
+            each = 2
         )
 
         assertEquals(
@@ -142,9 +147,10 @@ class RemindieExtTest {
             created = created6,
             shot = shot6,
             timeZone = timeZone,
-            title = "Oneshot - monthly 2",
+            title = "Oneshot - monthly 14",
             type = RemindieType.CALL,
-            period = RemindiePeriod.Monthly(14)
+            period = RemindiePeriod.MONTHLY,
+            each = 14
         )
 
         assertEquals(
@@ -170,7 +176,8 @@ class RemindieExtTest {
             timeZone = timeZone,
             title = "Daily at 22:00",
             type = RemindieType.CALL,
-            period = RemindiePeriod.Daily(1)
+            period = RemindiePeriod.DAILY,
+            each = 1
         )
 
         val remindie2 = Remindie(
@@ -180,7 +187,8 @@ class RemindieExtTest {
             timeZone = timeZone,
             title = "Weekly at 12:13",
             type = RemindieType.CALL,
-            period = RemindiePeriod.Weekly(1)
+            period = RemindiePeriod.WEEKLY,
+            each = 1
         )
 
         val remindie3 = Remindie(
@@ -190,7 +198,8 @@ class RemindieExtTest {
             timeZone = timeZone,
             title = "Monthly at 23:34",
             type = RemindieType.CALL,
-            period = RemindiePeriod.Monthly(1)
+            period = RemindiePeriod.MONTHLY,
+            each = 1
         )
 
         // test daily

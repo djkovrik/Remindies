@@ -8,15 +8,14 @@ allprojects {
         google()
         jcenter()
         mavenLocal()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        maven("https://dl.bintray.com/arkivanov/maven")
-        maven("https://dl.bintray.com/badoo/maven")
         maven("https://kotlin.bintray.com/kotlinx/")
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
+
 detekt {
-    input = files("$projectDir/common/")
+    input = files("$projectDir/android/", "$projectDir/common/", "$projectDir/desktop/")
     config = files("$projectDir/detekt/base-config.yml")
     baseline = file("$projectDir/detekt/baseline.xml")
     parallel = true

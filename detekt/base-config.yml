@@ -567,7 +567,7 @@ style:
     maxJumpCount: 1
   MagicNumber:
     active: true
-    excludes: ['**/build/generated/**', '**/commonTest/**', '**/androidTest/**', '**/*Color.kt', '**/*Shape.kt', '**/*Type.kt']
+    excludes: ['**/build/generated/**', '**/commonTest/**', '**/androidTest/**', '**/*Color.kt', '**/*Shape.kt', '**/*Type.kt', '**/**.kts']
     ignoreNumbers: ['-1', '0', '1', '2']
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false

@@ -1,5 +1,8 @@
 package com.sedsoftware.common.tools
 
+import com.badoo.reaktive.completable.Completable
+import com.badoo.reaktive.completable.completableFromFunction
+import com.badoo.reaktive.completable.subscribeOn
 import com.badoo.reaktive.scheduler.ioScheduler
 import com.badoo.reaktive.single.Single
 import com.badoo.reaktive.single.map
@@ -13,7 +16,6 @@ import com.sedsoftware.common.domain.entity.getShots
 import com.sedsoftware.common.domain.entity.toNearestShot
 import com.sedsoftware.common.domain.entity.updateTimeZone
 import com.sedsoftware.common.domain.exception.RemindieDeletionException
-import com.sedsoftware.common.domain.exception.RemindieInsertionException
 import com.sedsoftware.common.domain.exception.RemindieSchedulingException
 import com.sedsoftware.common.domain.exception.ShotsFetchingException
 import com.sedsoftware.common.domain.type.Outcome
@@ -38,43 +40,35 @@ import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 class RemindiesController(
-    dependencies: Dependencies,
+    private val database: RemindieDatabase,
+    private val manager: RemindieAlarmManager,
+    private val settings: RemindieSettings,
     private val timeZone: TimeZone = TimeZone.currentSystemDefault(),
     private val today: LocalDateTime = Clock.System.now().toLocalDateTime(timeZone)
 ) {
 
-    interface Dependencies {
-        val database: RemindieDatabase
-        val manager: RemindieAlarmManager
-        val settings: RemindieSettings
-    }
-
-    private val repository = RemindiesRepository(dependencies.database)
+    private val repository = RemindiesRepository(database)
     private val typeChecker = RemindieTypeChecker()
-    private val manager = dependencies.manager
-    private val settings = dependencies.settings
 
-    fun add(title: String, date: LocalDateTime, period: RemindiePeriod): Single<Outcome<Unit>> =
-        singleFromFunction {
+
+    fun add(title: String, shot: LocalDateTime, period: RemindiePeriod, each: Int): Completable =
+        completableFromFunction {
             val todayAsLong = today.toInstant(timeZone).toEpochMilliseconds()
 
             val new = Remindie(
                 timestamp = todayAsLong,
                 created = today,
-                shot = date,
+                shot = shot,
                 timeZone = timeZone,
                 title = title,
                 type = typeChecker.getType(title),
-                period = period
+                period = period,
+                each = each
             )
 
             repository.insert(new)
         }
             .subscribeOn(ioScheduler)
-            .map { Outcome.Success(Unit) }
-            .onErrorReturn {
-                Outcome.Error(RemindieInsertionException("Failed to insert new remindie", it))
-            }
 
     fun remove(remindie: Remindie): Single<Outcome<Unit>> =
         singleFromFunction {

@@ -40,27 +40,6 @@ kotlin {
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
-    }
-}
-
-android {
-    compileSdkVersion(30)
-
-    defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(30)
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    sourceSets {
-        named("main") {
-            java.srcDirs("src/androidMain/kotlin")
-            res.srcDirs("src/androidMain/res")
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-        }
+        kotlinOptions.useIR = true
     }
 }

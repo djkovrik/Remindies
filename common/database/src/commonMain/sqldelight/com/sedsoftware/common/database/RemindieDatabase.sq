@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS RemindieEntity (
     timeZone TEXT NOT NULL,
     title TEXT NOT NULL,
     type TEXT NOT NULL,
-    period TEXT NOT NULL
+    period TEXT NOT NULL,
+    each INTEGER as Int NOT NULL
 );
 
 select:
@@ -23,5 +24,5 @@ DELETE FROM RemindieEntity
 WHERE id = :id;
 
 insert:
-INSERT INTO RemindieEntity (timestamp, created, shot, timeZone, title, type, period)
-VALUES (:timestamp, :created, :shot, :timeZone, :title, :type, :period);
+INSERT INTO RemindieEntity (timestamp, created, shot, timeZone, title, type, period, each)
+VALUES (:timestamp, :created, :shot, :timeZone, :title, :type, :period, :each);

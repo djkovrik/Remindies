@@ -20,7 +20,8 @@ object Stubs {
             timeZone = timeZone,
             title = "Oneshot - tomorrow",
             type = RemindieType.AIRPORT,
-            period = RemindiePeriod.None
+            period = RemindiePeriod.NONE,
+            each = 0
         ),
 
         Remindie(
@@ -30,7 +31,8 @@ object Stubs {
             timeZone = timeZone,
             title = "Each 3 hours from today starting at 12:00",
             type = RemindieType.CALL,
-            period = RemindiePeriod.Hourly(3)
+            period = RemindiePeriod.HOURLY,
+            each = 3
         ),
 
         Remindie(
@@ -40,7 +42,8 @@ object Stubs {
             timeZone = timeZone,
             title = "Daily - from tomorrow at 8:00",
             type = RemindieType.CAFE,
-            period = RemindiePeriod.Daily(1)
+            period = RemindiePeriod.DAILY,
+            each = 1
         ),
 
         Remindie(
@@ -50,7 +53,8 @@ object Stubs {
             timeZone = timeZone,
             title = "Daily - from tomorrow each 3 days at 11:22",
             type = RemindieType.CALL,
-            period = RemindiePeriod.Daily(3)
+            period = RemindiePeriod.DAILY,
+            each = 3
         ),
 
         Remindie(
@@ -60,7 +64,8 @@ object Stubs {
             timeZone = timeZone,
             title = "Each week from Saturday at 21:30",
             type = RemindieType.GYM,
-            period = RemindiePeriod.Weekly(1)
+            period = RemindiePeriod.WEEKLY,
+            each = 1
         ),
 
         Remindie(
@@ -70,7 +75,8 @@ object Stubs {
             timeZone = timeZone,
             title = "Each two weeks from Sunday at 16:00",
             type = RemindieType.DOCTOR,
-            period = RemindiePeriod.Weekly(2)
+            period = RemindiePeriod.WEEKLY,
+            each = 2
         ),
 
         Remindie(
@@ -80,7 +86,8 @@ object Stubs {
             timeZone = timeZone,
             title = "Pay rent each month at 18:00",
             type = RemindieType.PAY,
-            period = RemindiePeriod.Monthly(1)
+            period = RemindiePeriod.MONTHLY,
+            each = 1
         ),
 
         Remindie(
@@ -90,7 +97,8 @@ object Stubs {
             timeZone = timeZone,
             title = "Congratulations each New Year night ^-^ at 23:00",
             type = RemindieType.CALL,
-            period = RemindiePeriod.Yearly(1)
+            period = RemindiePeriod.YEARLY,
+            each = 1
         ),
     )
 }

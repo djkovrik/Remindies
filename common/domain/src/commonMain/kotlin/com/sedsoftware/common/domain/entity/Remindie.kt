@@ -13,5 +13,6 @@ data class Remindie(
     val timeZone: TimeZone,
     val title: String,
     val type: RemindieType,
-    val period: RemindiePeriod
+    val period: RemindiePeriod,
+    val each: Int
 )

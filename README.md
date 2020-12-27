@@ -5,3 +5,5 @@
 
 ## Remindies
 Simple reminders manager and Compose playground
+
+Working build setup: AS 4.2 beta 2 + AGP 4.0.1
