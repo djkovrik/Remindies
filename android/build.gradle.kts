@@ -10,8 +10,9 @@ android {
     compileSdkVersion(30)
 
     defaultConfig {
-        minSdkVersion(21)
+        minSdkVersion(23)
         targetSdkVersion(30)
+
         versionCode = 1000
         versionName = "0.0.1"
         applicationId = "com.sedsoftware.remindies"

@@ -2,7 +2,7 @@ object Deps {
 
     object JetBrains {
         object Kotlin {
-            private const val VERSION = "1.4.20"
+            private const val VERSION = "1.4.21"
             const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$VERSION"
             const val testCommon = "org.jetbrains.kotlin:kotlin-test-common:$VERSION"
             const val testJunit = "org.jetbrains.kotlin:kotlin-test-junit:$VERSION"
@@ -10,7 +10,7 @@ object Deps {
         }
 
         object Compose {
-            private const val VERSION = "0.2.0-build132"
+            private const val VERSION = "0.3.0-build135"
             const val gradlePlugin = "org.jetbrains.compose:compose-gradle-plugin:$VERSION"
         }
 
@@ -22,7 +22,7 @@ object Deps {
 
     object Android {
         object Build {
-            const val gradlePlugin = "com.android.tools.build:gradle:4.2.0-alpha16"
+            const val gradlePlugin = "com.android.tools.build:gradle:4.0.1"
         }
         object JetPack {
             const val appCompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
@@ -47,7 +47,7 @@ object Deps {
         }
 
         object Reaktive {
-            private const val VERSION = "1.1.18"
+            private const val VERSION = "1.1.19"
             const val reaktive = "com.badoo.reaktive:reaktive:$VERSION"
             const val reaktiveTesting = "com.badoo.reaktive:reaktive-testing:$VERSION"
             const val utils = "com.badoo.reaktive:utils:$VERSION"

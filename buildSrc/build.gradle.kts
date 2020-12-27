@@ -29,7 +29,6 @@ buildscript {
 }
 
 dependencies {
-    implementation("xml-apis:xml-apis:1.4.01") // FIX FOR https://github.com/cashapp/sqldelight/issues/2058
     implementation(Deps.JetBrains.Compose.gradlePlugin)
     implementation(Deps.JetBrains.Kotlin.gradlePlugin)
     implementation(Deps.Android.Build.gradlePlugin)
