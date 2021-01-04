@@ -18,7 +18,7 @@ import kotlinx.datetime.available
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-internal class AddNewOneStoreProvider @ExperimentalTime constructor(
+internal class AddNewOneStoreProvider(
     private val storeFactory: StoreFactory,
     database: RemindieDatabase,
     manager: RemindieAlarmManager,
