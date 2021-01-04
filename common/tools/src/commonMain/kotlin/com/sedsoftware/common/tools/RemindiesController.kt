@@ -5,8 +5,6 @@ import com.badoo.reaktive.completable.completableFromFunction
 import com.badoo.reaktive.completable.subscribeOn
 import com.badoo.reaktive.scheduler.ioScheduler
 import com.badoo.reaktive.single.Single
-import com.badoo.reaktive.single.map
-import com.badoo.reaktive.single.onErrorReturn
 import com.badoo.reaktive.single.singleFromFunction
 import com.badoo.reaktive.single.subscribeOn
 import com.sedsoftware.common.database.RemindieDatabase
@@ -15,10 +13,6 @@ import com.sedsoftware.common.domain.entity.Shot
 import com.sedsoftware.common.domain.entity.getShots
 import com.sedsoftware.common.domain.entity.toNearestShot
 import com.sedsoftware.common.domain.entity.updateTimeZone
-import com.sedsoftware.common.domain.exception.RemindieDeletionException
-import com.sedsoftware.common.domain.exception.RemindieSchedulingException
-import com.sedsoftware.common.domain.exception.ShotsFetchingException
-import com.sedsoftware.common.domain.type.Outcome
 import com.sedsoftware.common.domain.type.RemindiePeriod
 import com.sedsoftware.common.tools.base.RemindieAlarmManager
 import com.sedsoftware.common.tools.base.RemindieSettings
@@ -50,7 +44,6 @@ class RemindiesController(
     private val repository = RemindiesRepository(database)
     private val typeChecker = RemindieTypeChecker()
 
-
     fun add(title: String, shot: LocalDateTime, period: RemindiePeriod, each: Int): Completable =
         completableFromFunction {
             val todayAsLong = today.toInstant(timeZone).toEpochMilliseconds()
@@ -70,20 +63,16 @@ class RemindiesController(
         }
             .subscribeOn(ioScheduler)
 
-    fun remove(remindie: Remindie): Single<Outcome<Unit>> =
-        singleFromFunction {
+    fun remove(remindie: Remindie): Completable =
+        completableFromFunction {
             val next = remindie.toNearestShot()
             manager.cancelAlarm(next)
             repository.delete(remindie)
         }
             .subscribeOn(ioScheduler)
-            .map { Outcome.Success(Unit) }
-            .onErrorReturn {
-                Outcome.Error(RemindieDeletionException("Failed to delete remindie", it))
-            }
 
-    fun rescheduleNext(): Single<Outcome<Unit>> =
-        singleFromFunction {
+    fun rescheduleNext(): Completable =
+        completableFromFunction {
             val shots = repository.getAll()
                 .map { it.toNearestShot() }
                 .filter { !it.isFired }
@@ -100,12 +89,8 @@ class RemindiesController(
             }
         }
             .subscribeOn(ioScheduler)
-            .map { Outcome.Success(Unit) }
-            .onErrorReturn {
-                Outcome.Error(RemindieSchedulingException("Failed to reschedule remindies", it))
-            }
 
-    fun getShotsForToday(): Single<Outcome<List<Shot>>> =
+    fun getShotsForToday(): Single<List<Shot>> =
         singleFromFunction {
             repository.getAll()
                 .map { it.toNearestShot() }
@@ -114,12 +99,8 @@ class RemindiesController(
                 .sortedBy { it.planned }
         }
             .subscribeOn(ioScheduler)
-            .map { Outcome.Success(it) }
-            .onErrorReturn {
-                Outcome.Error(ShotsFetchingException("Failed to fetch today shots", it))
-            }
 
-    fun getShotsForDay(date: LocalDateTime): Single<Outcome<List<Shot>>> =
+    fun getShotsForDay(date: LocalDateTime): Single<List<Shot>> =
         singleFromFunction {
             repository.getAll()
                 .map { it.toNearestShot() }
@@ -128,12 +109,8 @@ class RemindiesController(
                 .sortedBy { it.planned }
         }
             .subscribeOn(ioScheduler)
-            .map { Outcome.Success(it) }
-            .onErrorReturn {
-                Outcome.Error(ShotsFetchingException("Failed to fetch shots for $date", it))
-            }
 
-    fun getShotsForCurrentWeek(): Single<Outcome<List<Shot>>> =
+    fun getShotsForCurrentWeek(): Single<List<Shot>> =
         singleFromFunction {
             repository.getAll()
                 .fold(mutableListOf<Shot>(), { acc, remindie ->
@@ -151,12 +128,8 @@ class RemindiesController(
 
         }
             .subscribeOn(ioScheduler)
-            .map { Outcome.Success(it) }
-            .onErrorReturn {
-                Outcome.Error(ShotsFetchingException("Failed to fetch current week shots", it))
-            }
 
-    fun getShotsForWeek(date: LocalDateTime): Single<Outcome<List<Shot>>> =
+    fun getShotsForWeek(date: LocalDateTime): Single<List<Shot>> =
         singleFromFunction {
             repository.getAll()
                 .fold(mutableListOf<Shot>(), { acc, remindie ->
@@ -174,12 +147,8 @@ class RemindiesController(
 
         }
             .subscribeOn(ioScheduler)
-            .map { Outcome.Success(it) }
-            .onErrorReturn {
-                Outcome.Error(ShotsFetchingException("Failed to fetch week shots for $date", it))
-            }
 
-    fun getShotsForCurrentMonth(): Single<Outcome<List<Shot>>> =
+    fun getShotsForCurrentMonth(): Single<List<Shot>> =
         singleFromFunction {
             repository.getAll()
                 .fold(mutableListOf<Shot>(), { acc, remindie ->
@@ -197,12 +166,8 @@ class RemindiesController(
 
         }
             .subscribeOn(ioScheduler)
-            .map { Outcome.Success(it) }
-            .onErrorReturn {
-                Outcome.Error(ShotsFetchingException("Failed to fetch current month shots", it))
-            }
 
-    fun getShotsForMonth(date: LocalDateTime): Single<Outcome<List<Shot>>> =
+    fun getShotsForMonth(date: LocalDateTime): Single<List<Shot>> =
         singleFromFunction {
             repository.getAll()
                 .fold(mutableListOf<Shot>(), { acc, remindie ->
@@ -220,12 +185,8 @@ class RemindiesController(
 
         }
             .subscribeOn(ioScheduler)
-            .map { Outcome.Success(it) }
-            .onErrorReturn {
-                Outcome.Error(ShotsFetchingException("Failed to fetch month shots for $date", it))
-            }
 
-    fun getShotsForCurrentYear(): Single<Outcome<List<Shot>>> =
+    fun getShotsForCurrentYear(): Single<List<Shot>> =
         singleFromFunction {
             repository.getAll()
                 .fold(mutableListOf<Shot>(), { acc, remindie ->
@@ -243,12 +204,8 @@ class RemindiesController(
 
         }
             .subscribeOn(ioScheduler)
-            .map { Outcome.Success(it) }
-            .onErrorReturn {
-                Outcome.Error(ShotsFetchingException("Failed to fetch current year shots", it))
-            }
 
-    fun getShotsForYear(date: LocalDateTime): Single<Outcome<List<Shot>>> =
+    fun getShotsForYear(date: LocalDateTime): Single<List<Shot>> =
         singleFromFunction {
             repository.getAll()
                 .fold(mutableListOf<Shot>(), { acc, remindie ->
@@ -266,8 +223,4 @@ class RemindiesController(
 
         }
             .subscribeOn(ioScheduler)
-            .map { Outcome.Success(it) }
-            .onErrorReturn {
-                Outcome.Error(ShotsFetchingException("Failed to fetch year shots for $date", it))
-            }
 }
