@@ -9,7 +9,6 @@ import com.sedsoftware.common.screens.main.MainScreenStore.State
 internal interface MainScreenStore : Store<Intent, State, Label> {
 
     sealed class Intent {
-        data class ShowTodaySchedule(val shots: List<Shot>) : Intent()
         object ShowAddNewOne : Intent()
         object HideAddNewOne : Intent()
         object ShowCalendar : Intent()
