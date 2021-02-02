@@ -2,7 +2,7 @@ object Deps {
 
     object JetBrains {
         object Kotlin {
-            private const val VERSION = "1.4.21"
+            private const val VERSION = "1.4.21-2"
             const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$VERSION"
             const val testCommon = "org.jetbrains.kotlin:kotlin-test-common:$VERSION"
             const val testJunit = "org.jetbrains.kotlin:kotlin-test-junit:$VERSION"
@@ -10,12 +10,12 @@ object Deps {
         }
 
         object Compose {
-            private const val VERSION = "0.3.0-build135"
+            private const val VERSION = "0.3.0-build146"
             const val gradlePlugin = "org.jetbrains.compose:compose-gradle-plugin:$VERSION"
         }
 
         object DateTime {
-            private const val VERSION = "0.1.0"
+            private const val VERSION = "0.1.1"
             const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:$VERSION"
         }
     }
@@ -25,7 +25,7 @@ object Deps {
             const val gradlePlugin = "com.android.tools.build:gradle:4.0.1"
         }
         object JetPack {
-            const val appCompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
+            const val appCompat = "androidx.appcompat:appcompat:1.3.0-beta01"
             const val ktx = "androidx.core:core-ktx:1.3.2"
         }
     }
