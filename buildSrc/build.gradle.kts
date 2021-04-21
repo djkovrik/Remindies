@@ -7,7 +7,7 @@ repositories {
     // TODO: remove after new build is published
     mavenLocal()
     google()
-    jcenter()
+    mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
@@ -16,7 +16,7 @@ buildscript {
         // TODO: remove after new build is published
         mavenLocal()
         google()
-        jcenter()
+        mavenCentral()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 

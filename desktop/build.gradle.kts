@@ -32,6 +32,9 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "ComposeDesktopRemindies"
+            packageVersion = "1.0.0"
+
+            modules("java.sql")
 
             windows {
                 menuGroup = "Remindies"

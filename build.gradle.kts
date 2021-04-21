@@ -6,7 +6,7 @@ plugins {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         mavenLocal()
         maven("https://kotlin.bintray.com/kotlinx/")
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")

@@ -2,7 +2,7 @@ object Deps {
 
     object JetBrains {
         object Kotlin {
-            private const val VERSION = "1.4.21-2"
+            private const val VERSION = "1.4.32"
             const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$VERSION"
             const val testCommon = "org.jetbrains.kotlin:kotlin-test-common:$VERSION"
             const val testJunit = "org.jetbrains.kotlin:kotlin-test-junit:$VERSION"
@@ -10,7 +10,7 @@ object Deps {
         }
 
         object Compose {
-            private const val VERSION = "0.3.0-build146"
+            private const val VERSION = "0.4.0-build183"
             const val gradlePlugin = "org.jetbrains.compose:compose-gradle-plugin:$VERSION"
         }
 
@@ -38,7 +38,7 @@ object Deps {
 
     object Core {
         object MVIKotlin {
-            private const val VERSION = "2.0.0"
+            private const val VERSION = "2.0.2"
             const val rx = "com.arkivanov.mvikotlin:rx:$VERSION"
             const val mvikotlin = "com.arkivanov.mvikotlin:mvikotlin:$VERSION"
             const val mvikotlinMain = "com.arkivanov.mvikotlin:mvikotlin-main:$VERSION"
@@ -48,13 +48,13 @@ object Deps {
         }
 
         object Decompose {
-            private const val VERSION = "0.1.7"
+            private const val VERSION = "0.2.3"
             const val decompose = "com.arkivanov.decompose:decompose:$VERSION"
             const val extensionsCompose = "com.arkivanov.decompose:extensions-compose-jetbrains:$VERSION"
         }
 
         object Reaktive {
-            private const val VERSION = "1.1.19"
+            private const val VERSION = "1.1.22"
             const val reaktive = "com.badoo.reaktive:reaktive:$VERSION"
             const val reaktiveTesting = "com.badoo.reaktive:reaktive-testing:$VERSION"
             const val utils = "com.badoo.reaktive:utils:$VERSION"
