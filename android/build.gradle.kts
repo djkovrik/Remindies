@@ -34,6 +34,7 @@ dependencies {
 
     implementation(compose.material)
 
+    implementation(Deps.Android.Activity.activityCompose)
     implementation(Deps.Android.JetPack.appCompat)
     implementation(Deps.Android.JetPack.ktx)
 

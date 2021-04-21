@@ -28,6 +28,9 @@ object Deps {
             const val appCompat = "androidx.appcompat:appcompat:1.3.0-beta01"
             const val ktx = "androidx.core:core-ktx:1.3.2"
         }
+        object Activity {
+            const val activityCompose = "androidx.activity:activity-compose:1.3.0-alpha02"
+        }
     }
 
     object Tools {
