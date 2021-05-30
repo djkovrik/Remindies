@@ -1,6 +1,5 @@
 plugins {
     `kotlin-dsl`
-    `kotlin-dsl-precompiled-script-plugins`
 }
 
 repositories {
@@ -9,23 +8,6 @@ repositories {
     google()
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-}
-
-buildscript {
-    repositories {
-        // TODO: remove after new build is published
-        mavenLocal()
-        google()
-        mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    }
-
-    dependencies {
-        classpath(Deps.JetBrains.Compose.gradlePlugin)
-        classpath(Deps.JetBrains.Kotlin.gradlePlugin)
-        classpath(Deps.Android.Build.gradlePlugin)
-        classpath(Deps.Tools.Detekt.detekt)
-    }
 }
 
 dependencies {

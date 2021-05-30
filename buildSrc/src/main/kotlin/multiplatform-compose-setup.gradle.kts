@@ -20,13 +20,13 @@ kotlin {
         }
         named("androidMain") {
             dependencies {
-                api(Deps.Android.JetPack.appCompat)
-                api(Deps.Android.JetPack.ktx)
+                implementation(Deps.Android.JetPack.appCompat)
+                implementation(Deps.Android.JetPack.ktx)
             }
         }
         named("desktopMain") {
             dependencies {
-                api(compose.desktop.common)
+                implementation(compose.desktop.common)
             }
         }
     }

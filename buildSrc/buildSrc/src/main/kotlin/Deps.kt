@@ -15,7 +15,7 @@ object Deps {
         }
 
         object DateTime {
-            private const val VERSION = "0.1.1"
+            private const val VERSION = "0.2.1"
             const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:$VERSION"
         }
     }
